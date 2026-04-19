@@ -39,11 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'messages_app',
     'login_app',
-    #'schedule_app', #
-    #'team_app',#
     'organisation_app',
-    #'sky_dash',#
-
+    'teams_app',
 ]
 
 MIDDLEWARE = [
