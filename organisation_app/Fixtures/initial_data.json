@@ -1,0 +1,17 @@
+[
+  {
+    "model": "organisation_app.teamtype",
+    "pk": 1,
+    "fields": { "name": "Core Platform" }
+  },
+  {
+    "model": "organisation_app.teamtype",
+    "pk": 2,
+    "fields": { "name": "Content & Media" }
+  },
+  {
+    "model": "organisation_app.teamtype",
+    "pk": 3,
+    "fields": { "name": "Customer Experience" }
+  }
+]

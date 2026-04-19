@@ -1,0 +1,157 @@
+{% extends 'global.html' %}
+
+{% block content %}
+<style>
+    /* 1. Force the layout to ignore any squashing from global.html */
+    nav, .navbar, .main-header { display: none !important; }
+
+    .full-page-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        /* Diagonal gradient from your teal to dark navy */
+        background: linear-gradient(135deg, #32a8a0 0%, #1a4d4a 45%, #0f172a 100%);
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* 2. Top Utility Bar for Help/Support */
+    .utility-bar {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        padding: 20px 50px;
+        box-sizing: border-box;
+    }
+
+    .utility-bar a {
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        margin-left: 25px;
+        font-weight: 500;
+        opacity: 0.9;
+    }
+
+    .utility-bar a:hover { opacity: 1; text-decoration: underline; }
+
+    /* 3. Sleek, Small Login Card */
+    .login-card {
+        background: #ffffff;
+        width: 100%;
+        max-width: 340px; /* Reduced width for a tighter look */
+        margin: auto;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+
+    .brand-title {
+        font-size: 26px;
+        font-weight: 800;
+        color: #1e293b;
+        margin: 0;
+        letter-spacing: -1px;
+    }
+
+    .input-box {
+        width: 100%;
+        padding: 12px;
+        margin-top: 8px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        background: #f8fafc;
+        box-sizing: border-box;
+    }
+
+    .btn-teal {
+        width: 100%;
+        background: #32a8a0;
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: 0.2s ease;
+    }
+
+    .btn-teal:hover { background: #288a83; transform: translateY(-1px); }
+
+    /* 4. Footer Styling to match global */
+    .login-footer {
+        width: 100%;
+        padding: 20px 50px;
+        display: flex;
+        justify-content: space-between;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+</style>
+
+<div class="full-page-bg">
+    <div class="utility-bar">
+        <a href="#">Help</a>
+        <a href="#">Contact Support</a>
+    </div>
+
+    <div class="login-card">
+        <div style="margin-bottom: 30px;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Globe_icon.svg" width="30">
+                <h1 class="brand-title">OpenSky</h1>
+            </div>
+            <p style="color: #64748b; font-size: 13px; margin-top: 5px;">Engineering Directory</p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div style="text-align: left; margin-bottom: 20px;">
+                <label style="font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase;">Email Address</label>
+                <input type="text" name="username" placeholder="rafia_admin" required class="input-box">
+            </div>
+
+            <div style="text-align: left; margin-bottom: 15px;">
+                <label style="font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase;">Password</label>
+                <input type="password" name="password" placeholder="••••••••" required class="input-box">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 10px;">
+                <label style="color: #64748b; cursor: pointer;"><input type="checkbox"> Remember</label>
+                <a href="#" style="color: #32a8a0; text-decoration: none; font-weight: 700;">Forgot?</a>
+            </div>
+
+            <button type="submit" class="btn-teal">Sign In</button>
+        </form>
+
+        <div style="margin: 25px 0; font-size: 11px; color: #cbd5e1; font-weight: 800;">OR</div>
+
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <button type="button" style="flex: 1; border: 1px solid #e2e8f0; background: white; padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_Logo.svg" width="16"> Google
+            </button>
+            <button type="button" style="flex: 1; border: 1px solid #e2e8f0; background: white; padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" width="16"> Microsoft
+            </button>
+        </div>
+
+        <a href="{% url 'admin:index' %}" style="font-size: 13px; color: #32a8a0; text-decoration: none; font-weight: 700;">Admin Login</a>
+    </div>
+
+    <div class="login-footer">
+        <span>© 2026 Open Sky Aviation Group. All rights reserved.</span>
+        <div style="display: flex; gap: 20px;">
+            <span style="cursor:pointer">Privacy Policy</span>
+            <span style="cursor:pointer">Terms of Service</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

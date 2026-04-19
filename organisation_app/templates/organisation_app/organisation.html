@@ -1,0 +1,86 @@
+{% extends 'global.html' %}
+
+{% block content %}
+    {% include 'organisation_app/_filter.html' %}
+
+    <main class="content-area" style="flex: 1; padding: 30px; overflow-y: auto;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <div>
+                <h1 style="font-size: 24px; color: #2c3e50; margin: 0; font-family: 'Exo 2', sans-serif;">Organisation Map</h1>
+                <p style="font-size: 13px; color: #7f8c8d;">Visualizing team structures and connectivity for Sky Streaming</p>
+            </div>
+            <a href="{% url 'export_teams_csv' %}?department={{ selected_dept }}&team_type={{ selected_type }}&dependencies={{ current_filter }}" 
+   style="background: #22aba4; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 14px;">
+    Export Data
+</a>
+        </div>
+
+        <div class="network-canvas" style="background: #1f2d3d; border-radius: 15px; padding: 30px; min-height: 700px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+    
+            {% for dept in departments %}
+            <div class="dept-row" style="margin-bottom: 40px;">
+                <h3 style="color: #22aba4; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; border-left: 3px solid #22aba4; padding-left: 10px;">
+                    {{ dept.name }}
+                </h3>
+                
+                <div class="team-grid" style="display: flex; flex-wrap: wrap; gap: 15px;">
+                    {% for team in teams %}
+                        {% if team.department_id == dept.id %}
+                        <div class="team-node" 
+                             style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; width: 220px; transition: 0.4s ease; cursor: pointer;">
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px;">
+                                <div style="font-size: 10px; color: #88929b; text-transform: uppercase;">{{ team.team_type.name }}</div>
+                                <span style="font-size: 10px; color: #22aba4;">{{ team.members_count }} members</span>
+                            </div>
+                            
+                            <div style="font-size: 15px; color: white; font-weight: 500; margin: 5px 0;">{{ team.name }}</div>
+                            <div style="font-size: 12px; color: #5d6d7e; margin-bottom: 8px;">{{ team.specialization }}</div>
+
+                            {% if current_filter == 'upstream' %}
+                                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05);">
+                                    <span style="font-size: 9px; background: rgba(46, 204, 113, 0.15); color: #2ecc71; padding: 3px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">
+                                        Upstream: {{ team.upstream_dependencies.count }}
+                                    </span>
+                                </div>
+                            {% elif current_filter == 'downstream' %}
+                                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05);">
+                                    <span style="font-size: 9px; background: rgba(230, 126, 34, 0.15); color: #e67e22; padding: 3px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">
+                                        Downstream: {{ team.downstream_dependents.count }}
+                                    </span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% empty %}
+            <div style="color: #88929b; text-align: center; padding-top: 150px;">
+                <p style="font-size: 18px;">No data found.</p>
+                <p style="font-size: 14px;">Please ensure your fixtures are loaded.</p>
+            </div>
+            {% endfor %}
+
+            <div class="legend" style="position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); color: white; font-size: 12px; backdrop-filter: blur(5px);">
+                <p style="margin-bottom: 10px; font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; color: #22aba4;">Map Legend</p>
+                <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 10px; height: 10px; background: #22aba4; border-radius: 2px;"></span> Active Team</div>
+                {% if current_filter == 'upstream' %}
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 5px;"><span style="width: 10px; height: 10px; background: #2ecc71; border-radius: 2px;"></span> Consumer Node</div>
+                {% elif current_filter == 'downstream' %}
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 5px;"><span style="width: 10px; height: 10px; background: #e67e22; border-radius: 2px;"></span> Provider Node</div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .team-node:hover {
+            background: rgba(34, 171, 164, 0.15) !important;
+            border-color: #22aba4 !important;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+    </style>
+{% endblock %}

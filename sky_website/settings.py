@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'report_app',
     'team_app',
     'organisation_app',
+    'organisation_app',
+    'login_app',
+    'sky_dash',
+
 ]
 
 MIDDLEWARE = [
@@ -60,7 +64,7 @@ ROOT_URLCONF = 'sky_website.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,0 +1,6 @@
+[
+  { "model": "organisation_app.department", "pk": 1, "fields": { "name": "Sky Streaming Tech" } },
+  { "model": "organisation_app.department", "pk": 2, "fields": { "name": "Sky Sports & News" } },
+  { "model": "organisation_app.department", "pk": 3, "fields": { "name": "Broadband & Connectivity" } },
+  { "model": "organisation_app.department", "pk": 4, "fields": { "name": "Sky Originals Production" } }
+]

@@ -1,0 +1,146 @@
+[
+  {
+    "model": "organisation_app.team",
+    "pk": 1,
+    "fields": {
+      "name": "Video Player Engine",
+      "specialization": "Core Playback SDK",
+      "members_count": 8,
+      "department": 1,
+      "team_type": 1,
+      "upstream_dependencies": []
+    }
+  },
+  {
+    "model": "organisation_app.team",
+    "pk": 2,
+    "fields": {
+      "name": "User Auth & Profile",
+      "specialization": "Identity Management",
+      "members_count": 6,
+      "department": 1,
+      "team_type": 1,
+      "upstream_dependencies": []
+    }
+  },
+  {
+    "model": "organisation_app.team",
+    "pk": 3,
+    "fields": {
+      "name": "Content Delivery Network",
+      "specialization": "Edge Computing",
+      "members_count": 12,
+      "department": 1,
+      "team_type": 1,
+      "upstream_dependencies": [1]
+    }
+  },
+  {
+    "model": "organisation_app.team",
+    "pk": 4,
+    "fields": {
+      "name": "Live Match Streaming",
+      "specialization": "Ultra HD Low Latency",
+      "members_count": 15,
+      "department": 2,
+      "team_type": 2,
+      "upstream_dependencies": [1, 3]
+    }
+  },
+  {
+    "model": "organisation_app.team",
+    "pk": 5,
+    "fields": {
+      "name": "Sports Data Stats",
+      "specialization": "Real-time Analytics",
+      "members_count": 7,
+      "department": 2,
+      "team_type": 2,
+      "upstream_dependencies": [4]
+    }
+  },
+  {
+    "model": "organisation_app.team",
+    "pk": 6,
+    "fields": {
+      "name": "News Room Systems",
+      "specialization": "Broadcast Workflow",
+      "members_count": 10,
+      "department": 2,
+      "team_type": 2,
+      "upstream_dependencies": [3]
+    }
+  },
+  {
+    "model": "organisation_app.team",
+    "pk": 7,
+    "fields": {
+      "name": "Router Firmware",
+      "specialization": "Hardware Integration",
+      "members_count": 20,
+      "department": 3,
+      "team_type": 1,
+      "upstream_dependencies": []
+    }
+  },
+  {
+    "model": "organisation_app.team",
+    "pk": 8,
+    "fields": {
+      "name": "WiFi Optimization",
+      "specialization": "Signal Mesh Tech",
+      "members_count": 9,
+      "department": 3,
+      "team_type": 3,
+      "upstream_dependencies": [7]
+    }
+  },
+  {
+    "model": "organisation_app.team",
+    "pk": 9,
+    "fields": {
+      "name": "Customer Billing",
+      "specialization": "Payment Gateways",
+      "members_count": 11,
+      "department": 3,
+      "team_type": 3,
+      "upstream_dependencies": [2]
+    }
+  },
+  {
+    "model": "organisation_app.team",
+    "pk": 10,
+    "fields": {
+      "name": "Script Development",
+      "specialization": "Creative Writing",
+      "members_count": 5,
+      "department": 4,
+      "team_type": 2,
+      "upstream_dependencies": []
+    }
+  },
+  {
+    "model": "organisation_app.team",
+    "pk": 11,
+    "fields": {
+      "name": "Post-Production",
+      "specialization": "VFX & Editing",
+      "members_count": 25,
+      "department": 4,
+      "team_type": 2,
+      "upstream_dependencies": [10]
+    }
+  },
+  {
+    "model": "organisation_app.team",
+    "pk": 12,
+    "fields": {
+      "name": "Digital Rights Management",
+      "specialization": "Encryption & Licensing",
+      "members_count": 8,
+      "department": 4,
+      "team_type": 1,
+      "upstream_dependencies": [2, 11]
+    }
+  }
+]

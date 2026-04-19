@@ -1,0 +1,97 @@
+{% extends 'global.html' %}
+
+{% block content %}
+<style>
+    /* Reset for Dashboard Layout */
+    body { background-color: #f3f4f6; margin: 0; font-family: 'Inter', sans-serif; overflow: hidden; }
+    
+    .dashboard-wrapper { display: flex; height: 100vh; width: 100vw; }
+
+    /* Left Sidebar - Matches the blue in your screenshot */
+    .sidebar {
+        width: 260px;
+        background-color: #1a56db; /* Deep Sky Blue */
+        color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 30px 20px;
+        flex-shrink: 0;
+    }
+    
+    .sidebar-logo { font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 10px; margin-bottom: 50px; }
+    .nav-link { 
+        display: flex; align-items: center; gap: 15px; padding: 12px 15px; 
+        color: rgba(255,255,255,0.7); text-decoration: none; border-radius: 12px; margin-bottom: 8px; transition: 0.3s;
+    }
+    .nav-link.active { background: rgba(255,255,255,0.2); color: white; }
+
+    /* Main Area */
+    .main-panel { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+    
+    .top-nav {
+        background: white; padding: 15px 40px; border-bottom: 1px solid #e5e7eb;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .search-input { background: #f9fafb; border: 1px solid #e5e7eb; padding: 10px 15px; border-radius: 10px; width: 400px; }
+
+    /* Grid Content */
+    .content { padding: 40px; }
+    .welcome-header h1 { font-size: 28px; color: #111827; margin: 0; }
+
+    .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+    
+    /* Action Cards */
+    .card {
+        padding: 30px; border-radius: 16px; color: white; cursor: pointer; transition: 0.3s;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    .card-dark-blue { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+    .card-mid-blue { background: linear-gradient(135deg, #2563eb, #60a5fa); }
+    .card-light-blue { background: linear-gradient(135deg, #0ea5e9, #38bdf8); }
+</style>
+
+<div class="dashboard-wrapper">
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Globe_icon.svg" width="28" style="filter: brightness(0) invert(1);">
+            Open Sky
+        </div>
+        <a href="#" class="nav-link active">Dashboard</a>
+        <a href="#" class="nav-link">Teams</a>
+        <a href="#" class="nav-link">Organisation</a>
+        <a href="#" class="nav-link">Messages</a>
+        <a href="#" class="nav-link">Schedule</a>
+    </div>
+
+    <div class="main-panel">
+        <div class="top-nav">
+            <input type="text" class="search-input" placeholder="Search teams, departments, or managers...">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <span style="font-weight: 600; color: #374151;">{{ user.username }}</span>
+                <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=1a56db&color=fff" width="40" style="border-radius: 50%;">
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="welcome-header">
+                <h1>Welcome, {{ user.username }}!</h1>
+            </div>
+
+            <div class="grid-container">
+                <div class="card card-dark-blue">
+                    <h3>Find a Team</h3>
+                    <p style="font-size: 14px; opacity: 0.9;">Search and filter through all the teams</p>
+                </div>
+                <div class="card card-mid-blue">
+                    <h3>View Map</h3>
+                    <p style="font-size: 14px; opacity: 0.9;">Explore hierarchies and dependencies</p>
+                </div>
+                <div class="card card-light-blue">
+                    <h3>Contact Teams</h3>
+                    <p style="font-size: 14px; opacity: 0.9;">Quick access to team communication</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
