@@ -39,13 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'messages_app',
     'login_app',
-    'schedule_app', 
-    'report_app',
-    'team_app',
+    #'schedule_app', #
+    #'team_app',#
     'organisation_app',
-    'organisation_app',
-    'login_app',
-    'sky_dash',
+    #'sky_dash',#
 
 ]
 
