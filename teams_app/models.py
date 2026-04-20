@@ -1,25 +1,27 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Team(models.Model):
-    name = models.CharField(max_length=200)
-    email = models.EmailField()
-    skills = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+
+class Skill(models.Model):
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
-class Dependency(models.Model):
-    DEPENDENCY_TYPES = (
-        ('Upstream', 'Upstream'),
-        ('Downstream', 'Downstream'),
+
+class Team(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField(blank=True, null=True)
+
+    members = models.ManyToManyField(User, blank=True)
+    skills = models.ManyToManyField(Skill, blank=True)
+
+    upstream = models.ManyToManyField(
+        'self',
+        symmetrical=False,
+        blank=True,
+        related_name='downstream'
     )
-    source_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='dependencies_as_source')
-    target_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='dependencies_as_target')
-    dependency_type = models.CharField(max_length=20, choices=DEPENDENCY_TYPES)
-    description = models.TextField(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.source_team.name} -> {self.target_team.name} ({self.dependency_type})"
+        return self.name
