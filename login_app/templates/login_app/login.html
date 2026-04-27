@@ -100,7 +100,7 @@
 <div class="full-page-bg">
     <div class="utility-bar">
         <a href="#">Help</a>
-        <a href="#">Contact Support</a>
+         <a href="{% url 'contact' %}">ContactSupport</a>
     </div>
 
     <div class="login-card">
@@ -126,7 +126,7 @@
 
             <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 10px;">
                 <label style="color: #64748b; cursor: pointer;"><input type="checkbox"> Remember</label>
-                <a href="#" style="color: #32a8a0; text-decoration: none; font-weight: 700;">Forgot?</a>
+                <a href="{% url 'forgot_password' %}" style="color: #32a8a0; text-decoration: none; font-weight: 700;">Forgot?</a>
             </div>
 
             <button type="submit" class="btn-teal">Sign In</button>
@@ -140,7 +140,7 @@
     <div class="login-footer">
         <span>© 2026 Open Sky Aviation Group. All rights reserved.</span>
         <div style="display: flex; gap: 20px;">
-            <span style="cursor:pointer">Privacy Policy</span>
+             <a href="{% url 'privacy' %}">Privacy Policy</a> |
             <span style="cursor:pointer">Terms of Service</span>
         </div>
     </div>
