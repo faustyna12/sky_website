@@ -1,0 +1,25 @@
+{% extends 'global.html' %}
+
+{% block content %}
+<main style="flex: 1; padding: 40px; background: #f8fafc; min-height: 100vh;">
+    <div style="margin-bottom: 20px;">
+        <h1 style="font-size: 24px; color: #1e293b;">View Profile</h1>
+        <a href="{% url 'dashboard_home' %}" style="color: #64748b; text-decoration: none; font-size: 13px;">← Back To Dashboard</a>
+    </div>
+
+    <div style="background: white; padding: 40px; border-radius: 16px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 30px; position: relative;">
+        <img src="https://ui-avatars.com/api/?name={{ user.username }}&size=100&background=22aba4&color=fff" 
+             style="width: 100px; height: 100px; border-radius: 50%;">
+        
+        <div>
+            <h2 style="margin: 0; color: #1e293b;">{{ user.first_name|default:user.username }} {{ user.last_name }}</h2>
+            <p style="color: #64748b; margin: 5px 0;">Sky Associate</p>
+            <p style="color: #22aba4; font-size: 14px; font-weight: 500;">{{ user.email|default:"no-email@sky.uk" }}</p>
+        </div>
+
+        <button style="position: absolute; right: 40px; top: 40px; background: #22aba4; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+            Edit Profile
+        </button>
+    </div>
+</main>
+{% endblock %}

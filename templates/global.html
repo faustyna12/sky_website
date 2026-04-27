@@ -17,7 +17,7 @@
             overflow-y: auto;
         }
 
-        /* HEADER - Gradient from #22aba4 to darker */
+        /* HEADER */
         .navbar { 
             width: 100%; 
             background: linear-gradient(to right, #22aba4, #1a252f); 
@@ -51,25 +51,72 @@
 
         .nav-right { display: flex; align-items: center; gap: 20px; }
 
-        /* MAIN WRAPPER */
-        .main-wrapper { 
-            flex: 1; 
-            overflow-y: auto; 
-            padding-bottom: 60px;
-            display: flex;
+        /* USER DROPDOWN */
+        .user-dropdown { position: relative; display: inline-block; }
+        
+        .user-trigger { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            color: white; 
+            font-weight: 500; 
+            font-size: 14px; 
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
         }
+        .user-trigger:hover { background: rgba(255, 255, 255, 0.1); }
+        
+        .nav-avatar { width: 35px; height: 35px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); }
+        
+        .dropdown-content {
+            display: none; /* Controlled by JS */
+            position: absolute;
+            right: 0;
+            top: 120%;
+            background-color: white;
+            min-width: 190px;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.15);
+            border-radius: 10px;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+        
+        /* Show class toggled by JavaScript */
+        .dropdown-content.active { display: block; }
 
-        /* FOOTER - Clean White */
+        .dropdown-content a, .logout-btn {
+            color: #1e293b;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            transition: 0.2s;
+            width: 100%;
+            text-align: left;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+        
+        .dropdown-content a:hover, .logout-btn:hover { background-color: #f1f5f9; color: #22aba4; }
+        .logout-btn { color: #e53e3e; font-weight: 500; border-top: 1px solid #f1f5f9; margin-top: 5px; }
+
+        /* MAIN WRAPPER */
+        .main-wrapper { flex: 1; display: flex; overflow: hidden; }
+
+        /* FOOTER */
         .footer {
             background: #ffffff; 
-            color: #95a5a6; 
+            color: #94a3b8; 
             text-align: center;
-            padding: 12px; 
+            padding: 15px; 
             font-size: 12px; 
-            border-top: 1px solid #e0e0e0;
+            border-top: 1px solid #e2e8f0;
             flex-shrink: 0;
         }
-        .footer a { color: #7f8c8d; text-decoration: none; margin: 0 20px; }
+        .footer a { color: #64748b; text-decoration: none; margin: 0 15px; }
     </style>
 </head>
 <body>
@@ -80,29 +127,34 @@
             <div class="nav-links">               
                 <a href="{% url 'dashboard_home' %}">Dashboard</a>
                 <a href="/teams/">Teams</a>
-                <a href="/organisation/">Organisation</a>
+                <a href="{% url 'org_map' %}">Organisation</a>
                 <a href="/messages/">Messages</a>
                 <a href="/schedule/">Schedule</a>
             </div>
         </div>
+
         <div class="nav-right">
-    {% if user.is_authenticated %}
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <span style="font-size: 14px; color: white; font-weight: 500;">
-                {{ user.username }}
-            </span>
-            
-            <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" style="background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 5px; color: white; cursor: pointer; font-size: 13px; border: 1px solid rgba(255,255,255,0.2); font-family: 'Inter', sans-serif;">
-                    Logout
-                </button>
-            </form>
+            {% if user.is_authenticated %}
+                <div class="user-dropdown">
+                    <div class="user-trigger" id="userMenuTrigger">
+                        <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=22aba4&color=fff" class="nav-avatar">
+                        <span class="nav-username">{{ user.username }}</span>
+                        <span style="font-size: 10px; margin-left: 5px;">▼</span>
+                    </div>
+                    
+                    <div class="dropdown-content" id="userDropdownMenu">
+                        <a href="{% url 'user_profile' %}">👤 View Profile</a>
+                        <a href="#">⚙️ Settings</a>
+                        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn">↪ Sign Out</button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'login' %}" style="color: white; text-decoration: none; font-size: 14px; font-weight: 500;">Sign In</a>
+            {% endif %}
         </div>
-    {% else %}
-        <a href="{% url 'login' %}" style="color: white; text-decoration: none; font-size: 14px;">Sign In</a>
-    {% endif %}
-</div>
     </nav>
 
     <div class="main-wrapper">
@@ -111,10 +163,31 @@
     </div>
 
     <footer class="footer">
-    &copy; 2026 <strong>Open Sky Aviation Group</strong>. All rights reserved. 
-    <a href="{% url 'privacy' %}">Privacy Policy</a> | 
-    <a href="{% url 'contact' %}">Support</a>
-</footer>
+        &copy; 2026 <strong>Open Sky Aviation Group</strong>. All rights reserved. 
+        <a href="#">Privacy Policy</a> | <a href="#">Support</a>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const trigger = document.getElementById('userMenuTrigger');
+            const menu = document.getElementById('userDropdownMenu');
+
+            if (trigger && menu) {
+                // Open/Close on click
+                trigger.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    menu.classList.toggle('active');
+                });
+
+                // Close if clicking anywhere else on the page
+                window.addEventListener('click', function() {
+                    if (menu.classList.contains('active')) {
+                        menu.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>

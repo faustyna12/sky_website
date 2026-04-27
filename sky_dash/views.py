@@ -18,3 +18,8 @@ def dashboard_home(request):
         'user_name': user_name,
     }
     return render(request, 'sky_dash/sky_dash.html', context)
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def user_profile(request):
+    return render(request, 'sky_dash/user_profile.html')
