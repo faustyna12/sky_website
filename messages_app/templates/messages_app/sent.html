@@ -1,6 +1,6 @@
 {% extends 'messages_app/messages_base.html' %}
 
-{% block title %}Drafts{% endblock %}
+{% block title %}Sent{% endblock %}
 
 {% block messages_content %}
 
@@ -98,7 +98,7 @@
     gap: 10px;
 }
 
-.btn-edit,
+.btn-view,
 .btn-delete {
     border: none;
     border-radius: 12px;
@@ -108,7 +108,7 @@
     cursor: pointer;
 }
 
-.btn-edit {
+.btn-view {
     background: #0f766e;
     color: white;
 }
@@ -129,8 +129,8 @@
 
     <div class="messages-header">
         <div>
-            <h2>Draft Messages</h2>
-            <p>{{ messages|length }} draft{{ messages|length|pluralize }}</p>
+            <h2>Sent Messages</h2>
+            <p>{{ messages|length }} message{{ messages|length|pluralize }}</p>
         </div>
     </div>
 
@@ -139,7 +139,7 @@
         <thead>
             <tr>
                 <th>Receiver</th>
-                <th>Draft</th>
+                <th>Message</th>
                 <th>Date</th>
                 <th>Actions</th>
             </tr>
@@ -153,7 +153,7 @@
                 </td>
 
                 <td>
-                    <a href="{% url 'edit_draft' message.id %}" class="message-link">
+                    <a href="{% url 'view_message' message.id %}" class="message-link">
                         <div class="message-subject">{{ message.subject|default:"(No Subject)" }}</div>
                         <div class="message-preview">{{ message.content|truncatechars:70 }}</div>
                     </a>
@@ -165,7 +165,7 @@
 
                 <td>
                     <div class="action-buttons">
-                        <a href="{% url 'edit_draft' message.id %}" class="btn-edit">Edit</a>
+                        <a href="{% url 'view_message' message.id %}" class="btn-view">View</a>
 
                         <form method="post" action="{% url 'delete_message' message.id %}">
                             {% csrf_token %}
@@ -178,9 +178,8 @@
         </tbody>
     </table>
     {% else %}
-    <div class="empty-state">No drafts available.</div>
+    <div class="empty-state">No sent messages yet.</div>
     {% endif %}
 
 </div>
-
 {% endblock %}
