@@ -3,7 +3,7 @@
 {% block content %}
     {% include 'organisation_app/_filter.html' %}
 
-    <main class="content-area" style="flex: 1; padding: 30px; overflow-y: auto;">
+    <main class="content-area" style="flex: 1; padding: 30px;">
         
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
             <div>
@@ -11,19 +11,24 @@
                 <p style="font-size: 13px; color: #7f8c8d;">Visualizing team structures and connectivity for Sky Streaming</p>
             </div>
             <a href="{% url 'export_teams_csv' %}?department={{ selected_dept }}&team_type={{ selected_type }}&dependencies={{ current_filter }}" 
-   style="background: #22aba4; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 14px;">
-    Export Data
-</a>
+               style="background: #22aba4; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 14px;">
+                Export Data
+            </a>
         </div>
 
         <div class="network-canvas" style="background: #1f2d3d; border-radius: 15px; padding: 30px; min-height: 700px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-    
+            
             {% for dept in departments %}
             <div class="dept-row" style="margin-bottom: 40px;">
-                <h3 style="color: #22aba4; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; border-left: 3px solid #22aba4; padding-left: 10px;">
-                    {{ dept.name }}
-                </h3>
-                
+                <h3 onclick="openModal('{{ dept.name }}', '{{ dept.leader }}', '{{ dept.description }}', '{% for team in teams %}{% if team.department_id == dept.id %}{{ team.name }}{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}')" 
+    style="color: #22aba4; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; border-left: 3px solid #22aba4; padding-left: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+    
+    {{ dept.name }}
+    
+    <span class="info-hint" style="font-size: 10px; text-transform: none; letter-spacing: 0; color: #88929b; font-weight: normal; opacity: 0.7; border: 1px solid rgba(136, 146, 155, 0.3); padding: 2px 6px; border-radius: 4px;">
+        Click for Info
+    </span>
+</h3>
                 <div class="team-grid" style="display: flex; flex-wrap: wrap; gap: 15px;">
                     {% for team in teams %}
                         {% if team.department_id == dept.id %}
@@ -75,12 +80,161 @@
         </div>
     </main>
 
+    <div id="deptModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2 id="modalDeptName"></h2>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="info-group">
+                <label>Executive Leadership</label>
+                <p id="modalLeader" style="font-weight: 600; font-size: 18px; color: white;"></p>
+            </div>
+
+            <div class="info-group">
+                <label>Strategic Mission & Specialization</label>
+                <p id="modalSpec" style="line-height: 1.6;"></p>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+
+            <div class="teams-list-section">
+                <label style="color: #22aba4; font-size: 11px; text-transform: uppercase; font-weight: bold;">Operational Teams</label>
+                <p style="font-size: 13px; color: #88929b; margin-bottom: 12px;">The following teams operate under this department's governance:</p>
+                
+                <div id="modalTeamList" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
     <style>
+        /* Existing Team Node Hover */
         .team-node:hover {
             background: rgba(34, 171, 164, 0.15) !important;
             border-color: #22aba4 !important;
             transform: translateY(-4px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
+
+        /* NEW MODAL STYLES */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-box {
+            background: #1f2d3d;
+            padding: 35px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 550px;
+            border: 1px solid #22aba4;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: slideUp 0.3s ease-out;
+            color: white;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        #modalDeptName {
+            color: #22aba4;
+            margin: 0;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 22px;
+        }
+
+        .close-btn {
+            cursor: pointer;
+            color: #88929b;
+            font-size: 30px;
+            transition: 0.2s;
+        }
+
+        .close-btn:hover { color: white; }
+
+        .info-group { margin-bottom: 20px; }
+
+        .info-group label {
+            display: block;
+            color: #22aba4;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .info-group p {
+            margin: 0;
+            font-size: 16px;
+            color: #cbd5e0;
+        }
+
+        .dependency-info h4 {
+            font-size: 14px;
+            margin: 0 0 10px 0;
+        }
+
+        .dependency-info p {
+            font-size: 13px;
+            color: #88929b;
+            line-height: 1.5;
+        }
     </style>
+
+    <script>
+        function openModal(name, leader, spec, teamNamesString) {
+    document.getElementById('modalDeptName').innerText = name;
+    document.getElementById('modalLeader').innerText = leader;
+    document.getElementById('modalSpec').innerText = spec;
+
+    // Clear and fill the Team List
+    const listContainer = document.getElementById('modalTeamList');
+    listContainer.innerHTML = ''; // Reset list
+    
+    // teamNamesString comes from the HTML trigger as a comma-separated list
+    if (teamNamesString) {
+        const teams = teamNamesString.split(',');
+        teams.forEach(teamName => {
+            const span = document.createElement('span');
+            span.innerText = teamName.trim();
+            span.style = "background: rgba(34, 171, 164, 0.1); border: 1px solid rgba(34, 171, 164, 0.3); color: #22aba4; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;";
+            listContainer.appendChild(span);
+        });
+    }
+
+    document.getElementById('deptModal').style.display = 'flex';
+}
+
+        function closeModal() {
+            document.getElementById('deptModal').style.display = 'none';
+        }
+
+        // Close if user clicks the dark background
+        window.onclick = function(event) {
+            const modal = document.getElementById('deptModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
 {% endblock %}

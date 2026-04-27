@@ -2,7 +2,10 @@ from django.db import models
 
 class Department(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    
+    leader = models.CharField(max_length=100, default="TBD")
+    # Using 'description' to match the template code I gave you
+    description = models.TextField(blank=True, help_text="Department specialization")
+
     class Meta:
         verbose_name_plural = "Departments"
 
