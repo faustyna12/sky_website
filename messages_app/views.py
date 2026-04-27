@@ -109,7 +109,9 @@ def edit_draft(request, message_id):
 @login_required
 def delete_message(request, message_id):
     message = get_object_or_404(Message, id=message_id)
-    if request.user == message.sender or request.user in message.receiver.all():
+
+    if message.sender == request.user or message.receiver == request.user:
         message.delete()
-    return redirect('inbox')
+
+    return redirect(request.META.get("HTTP_REFERER", "inbox"))
     

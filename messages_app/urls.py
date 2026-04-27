@@ -8,5 +8,6 @@ urlpatterns = [
     path('compose/', views.compose_message, name='compose_message'),#compose message page
     path('drafts/', views.drafts, name='drafts'),#drafts page
     path('edit_draft/<int:message_id>/', views.edit_draft, name='edit_draft'),#edit draft page
+    path('delete/<int:message_id>/', views.delete_message, name='delete_message'),#delete message
 
 ]
