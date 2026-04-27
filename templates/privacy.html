@@ -1,19 +1,92 @@
-{% extends 'global.html' %}
-{% block content %}
-<div style="padding: 60px; max-width: 900px; margin: 40px auto; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); line-height: 1.8; color: #334155;">
-    <h1 style="color: #22aba4; font-family: 'Exo 2'; font-size: 32px; margin-bottom: 10px;">Privacy Policy</h1>
-    <p style="color: #94a3b8; font-size: 13px; margin-bottom: 30px;">Last Updated: April 27, 2026</p>
-    
-    <h3 style="color: #1e293b;">1. Data Collection</h3>
-    <p>Open Sky Aviation Group collects essential professional data including employee names, engineering credentials, department affiliations, and system access logs. This data is used exclusively for maintaining the Engineering Directory and ensuring operational security.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenSky | Privacy Policy</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', sans-serif; }
+        
+        /* Matching your login page diagonal gradient */
+        .bg-wrapper { 
+            background: linear-gradient(135deg, #32a8a0 0%, #1a4d4a 45%, #0f172a 100%);
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 40px 20px; 
+            box-sizing: border-box;
+        }
 
-    <h3 style="color: #1e293b; margin-top: 25px;">2. Purpose of Processing</h3>
-    <p>Information processed within the <strong>Open Sky</strong> platform is used to facilitate team coordination, manage project dependencies, and provide secure authentication for the Engineering Map and Schedule tools.</p>
+        .content-card { 
+            background: white; 
+            width: 100%; 
+            max-width: 800px; 
+            padding: 50px; 
+            border-radius: 20px; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+        }
 
-    <h3 style="color: #1e293b; margin-top: 25px;">3. Data Security</h3>
-    <p>We implement industry-standard AES-256 encryption for data at rest and TLS 1.3 for data in transit. Access to sensitive organizational maps is restricted based on the "Principle of Least Privilege" (PoLP).</p>
+        h1 { color: #32a8a0; font-size: 32px; margin-top: 10px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+        h3 { color: #1e293b; margin-top: 25px; margin-bottom: 10px; }
+        
+        p, li { color: #475569; line-height: 1.7; font-size: 15px; margin-bottom: 15px; }
+        ul { padding-left: 20px; margin-bottom: 20px; }
 
-    <h3 style="color: #1e293b; margin-top: 25px;">4. Corporate Compliance</h3>
-    <p>This policy aligns with global aviation data standards and internal Group Security protocols. For data deletion requests, please contact the IT Compliance Officer.</p>
-</div>
-{% endblock %}
+        .btn-back { 
+            display: inline-block; 
+            margin-bottom: 20px; 
+            color: #32a8a0; 
+            text-decoration: none; 
+            font-weight: 700; 
+            font-size: 14px; 
+            border: 1px solid #32a8a0; 
+            padding: 8px 20px; 
+            border-radius: 8px; 
+            transition: 0.3s;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .btn-back:hover { background: #32a8a0; color: white; }
+
+        .footer-note { 
+            font-size: 12px; 
+            color: #94a3b8; 
+            margin-top: 40px; 
+            text-align: center; 
+            border-top: 1px solid #f1f5f9; 
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-wrapper">
+        <div class="content-card">
+            <button onclick="window.history.back()" class="btn-back">← Back</button>
+
+            <h1>Privacy Policy</h1>
+            <p>At <strong>OpenSky Aviation</strong>, we recognize that our engineering data is the backbone of our safety standards. This policy explains how we manage and protect information within our internal portal.</p>
+
+            <h3>Data Security & Encryption</h3>
+            <p>All communication between your browser and our servers is encrypted. Access to specific engineering logs, schedules, and team configurations is strictly enforced based on your verified department credentials.</p>
+
+            <h3>What We Collect</h3>
+            <ul>
+                <li><strong>System Logs:</strong> We track login attempts to detect and prevent unauthorized access.</li>
+                <li><strong>Operational Data:</strong> Technical logs and messages entered into the system for fleet maintenance records.</li>
+                <li><strong>Profile Details:</strong> Essential information provided by your administrator to facilitate teamwork.</li>
+            </ul>
+
+            <h3>Data Sharing</h3>
+            <p>Your data is never sold. Information is only shared internally across authorized departments to ensure operational efficiency and aviation safety compliance.</p>
+
+            <div class="footer-note">
+                Last Revised: April 27, 2026 | OpenSky Security Compliance
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

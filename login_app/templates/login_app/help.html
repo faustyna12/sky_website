@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenSky | Help Center</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', sans-serif; }
+        .bg-wrapper { 
+            background: linear-gradient(135deg, #32a8a0 0%, #1a4d4a 45%, #0f172a 100%);
+            min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 40px 20px; box-sizing: border-box;
+        }
+        .content-card { 
+            background: white; width: 100%; max-width: 800px; padding: 50px; border-radius: 20px; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+        }
+        h1 { color: #32a8a0; font-size: 32px; margin-top: 10px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+        h3 { color: #1e293b; margin-top: 25px; }
+        p, li { color: #475569; line-height: 1.7; font-size: 15px; }
+        .btn-back { 
+            display: inline-block; margin-bottom: 20px; color: #32a8a0; text-decoration: none; 
+            font-weight: 700; font-size: 14px; border: 1px solid #32a8a0; padding: 8px 20px; 
+            border-radius: 8px; transition: 0.3s; cursor: pointer; background: transparent;
+        }
+        .btn-back:hover { background: #32a8a0; color: white; }
+    </style>
+</head>
+<body>
+    <div class="bg-wrapper">
+        <div class="content-card">
+            <button onclick="window.history.back()" class="btn-back">← Back to Login</button>
+            <h1>Help Center</h1>
+            
+            <h3>Login Issues</h3>
+            <p>If you are unable to access your account, ensure your caps lock is off and you are using your company-assigned email. After 5 failed attempts, your account will be locked for 15 minutes for security.</p>
+            
+            <h3>Forgot Password</h3>
+            <p>Use the "Forgot Password" link on the login page to trigger a reset email. If you do not receive the email within 2 minutes, check your internal spam folder.</p>
+
+            <h3>System Requirements</h3>
+            <p>For the best experience with our flight scheduling and message tools, we recommend:</p>
+            <ul>
+                <li>Google Chrome (Version 110 or higher)</li>
+                <li>Microsoft Edge (Version 110 or higher)</li>
+                <li>Enabled JavaScript and Cookies</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
