@@ -1,12 +1,20 @@
 from django.shortcuts import render
-from organisation_app.models import Team
+from organisation_app.models import Team, Department
 
 def dashboard_home(request):
-    # Fetching the 3 most recent teams to act as 'Recently Visited'
-    recent_teams = Team.objects.select_related('department', 'team_type').all().order_by('-id')[:3]
+    # Pull real teams from your loaded fixture data
+    all_teams = Team.objects.all()
+    recent_teams = all_teams.order_by('-id')[:3]
     
+    # Authenticated user check to prevent the 'AnonymousUser' crash
+    if request.user.is_authenticated:
+        user_name = request.user.first_name or request.user.username
+    else:
+        user_name = "Guest"
+
     context = {
         'recent_teams': recent_teams,
-        'user_name': request.user.first_name or request.user.username,
+        'total_teams_count': all_teams.count(),
+        'user_name': user_name,
     }
     return render(request, 'sky_dash/sky_dash.html', context)
