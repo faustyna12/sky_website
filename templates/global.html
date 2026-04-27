@@ -85,12 +85,23 @@
             </div>
         </div>
         <div class="nav-right">
-            <span style="font-size: 20px; cursor: pointer;">🔔</span>
-            <div style="text-align: right;">
-                <p style="font-size: 14px; font-weight: 500; margin: 0;">Sarah Johnson</p>
-                <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin: 0;">Administrator</p>
-            </div>
+    {% if user.is_authenticated %}
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-size: 14px; color: white; font-weight: 500;">
+                {{ user.username }}
+            </span>
+            
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 5px; color: white; cursor: pointer; font-size: 13px; border: 1px solid rgba(255,255,255,0.2); font-family: 'Inter', sans-serif;">
+                    Logout
+                </button>
+            </form>
         </div>
+    {% else %}
+        <a href="{% url 'login' %}" style="color: white; text-decoration: none; font-size: 14px;">Sign In</a>
+    {% endif %}
+</div>
     </nav>
 
     <div class="main-wrapper">
@@ -99,9 +110,10 @@
     </div>
 
     <footer class="footer">
-        &copy; 2026 <strong>Open Sky Aviation Group</strong>. All rights reserved. 
-        <a href="#">Privacy Policy</a> | <a href="#">Support</a>
-    </footer>
+    &copy; 2026 <strong>Open Sky Aviation Group</strong>. All rights reserved. 
+    <a href="{% url 'privacy' %}">Privacy Policy</a> | 
+    <a href="{% url 'contact' %}">Support</a>
+</footer>
 
 </body>
 </html>
