@@ -17,4 +17,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('teams/', include('teams_app.urls')),
     path('dashboard/', include('sky_dash.urls')),
+    path('messages/', include('messages_app.urls')),
 ]

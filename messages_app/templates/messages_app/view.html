@@ -1,0 +1,66 @@
+{% extends 'messages_app/messages_layout.html' %}
+
+{% block title %}View Message{% endblock %}
+
+{% block messages_content %}
+
+<div class="card border-0 shadow-sm main-card">
+    <div class="card-body p-0">
+
+        <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
+            <h3 class="fw-bold mb-0" style="color:#000;">
+                Message
+            </h3>
+
+            <form method="post"
+                  action="{% url 'delete_message' message.id %}">
+                {% csrf_token %}
+                <button type="submit"
+                        class="btn btn-sm btn-outline-danger"
+                        style="border-radius:10px;">
+                    Delete
+                </button>
+            </form>
+        </div>
+
+        <div class="p-4">
+
+            <div class="mb-3">
+                <h4 class="fw-semibold mb-1" style="color:#111111;">
+                    {{ message.subject|default:"(No Subject)" }}
+                </h4>
+
+                <div class="text-muted small">
+                    {{ message.timestamp|date:"M d, Y H:i" }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="text-muted small mb-1">
+                    <strong>From:</strong> {{ message.sender.username }}
+                </div>
+
+                <div class="text-muted small">
+                    <strong>To:</strong> {{ message.receiver.username }}
+                </div>
+            </div>
+
+            <div class="message-body p-3">
+                {{ message.content|linebreaks }}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+.message-body {
+    background: #f8f9fa;
+    border-radius: 12px;
+    color: #202124;
+    line-height: 1.6;
+    border: 1px solid #eee;
+}
+</style>
+
+{% endblock %}

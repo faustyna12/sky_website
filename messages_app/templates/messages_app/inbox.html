@@ -1,0 +1,118 @@
+{% extends 'messages_app/messages_layout.html' %}
+
+{% block title %}Inbox{% endblock %}
+
+{% block messages_content %}
+
+<div class="card border-0 shadow-sm main-card">
+    <div class="card-body p-0">
+
+        <div class="p-4 border-bottom">
+            <h3 class="fw-bold mb-0" style="color:#000;">
+                Inbox
+            </h3>
+        </div>
+
+        {% if messages %}
+        <div class="draft-list p-3">
+
+            {% for message in messages %}
+            <div class="draft-row d-flex align-items-stretch">
+
+                <div class="status-bar"></div>
+
+                <a href="{% url 'view_message' message.id %}"
+                   class="flex-grow-1 px-4 py-3 text-decoration-none">
+
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <div class="subject fw-semibold">
+                            {{ message.subject|default:"(No Subject)" }}
+                        </div>
+
+                        <div class="text-muted small">
+                            {{ message.timestamp|date:"M d, Y H:i" }}
+                        </div>
+                    </div>
+
+                    <div class="text-muted small">
+                        <strong>From:</strong> {{ message.sender.username }}
+                    </div>
+
+                </a>
+
+                <div class="d-flex align-items-center pe-3 gap-2">
+                    <a href="{% url 'view_message' message.id %}"
+                       class="btn btn-sm btn-outline-dark"
+                       style="border-radius:10px;">
+                        View
+                    </a>
+
+                    <form method="post"
+                          action="{% url 'delete_message' message.id %}"
+                          style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="btn btn-sm btn-outline-danger"
+                                style="border-radius:10px;">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <div class="p-4 text-muted">
+            Your inbox is empty.
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+<style>
+.draft-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.draft-row {
+    display: flex;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    transition: all 0.15s ease;
+    border: 1px solid #eee;
+    color: inherit;
+}
+
+.draft-row:hover {
+    background-color: #f5f8ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.status-bar {
+    width: 5px;
+    background: #111111;
+}
+
+.subject {
+    font-size: 0.95rem;
+    color: #202124;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.draft-row .text-muted {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>
+
+{% endblock %}
