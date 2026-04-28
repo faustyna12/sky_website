@@ -40,7 +40,10 @@
                                 <span style="font-size: 10px; color: #22aba4;">{{ team.members_count }} members</span>
                             </div>
                             
-                            <div style="font-size: 15px; color: white; font-weight: 500; margin: 5px 0;">{{ team.name }}</div>
+                            <a href="{% url 'team_detail' team.id %}"
+                               style="font-size: 15px; color: white; font-weight: 500; margin: 5px 0; display: block; text-decoration: none;">
+                               {{ team.name }}
+                            </a>
                             <div style="font-size: 12px; color: #5d6d7e; margin-bottom: 8px;">{{ team.specialization }}</div>
 
                             {% if current_filter == 'upstream' %}
