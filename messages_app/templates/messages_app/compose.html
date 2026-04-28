@@ -1,16 +1,102 @@
-{% extends 'messages_app/messages_layout.html' %}
+{% extends 'messages_app/messages_base.html' %}
 
 {% block title %}Compose{% endblock %}
 
 {% block messages_content %}
 
-<div class="card border-0 shadow-sm main-card">
-    <div class="card-body p-4">
+<style>
+.compose-panel {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    border: 1px solid #dbe4ee;
+}
 
-        <h3 class="fw-bold mb-4" style="color:#111111;">
-            Compose Message
-        </h3>
+.compose-header {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    background: linear-gradient(135deg, #22aba4, #0f766e);
+    color: white;
+}
 
+.compose-header h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.compose-body {
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #111827;
+}
+
+.recipient-box,
+.form-control {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 14px;
+    padding: 14px;
+    background: #f8fafc;
+}
+
+.form-control {
+    background: white;
+    font-size: 15px;
+}
+
+textarea.form-control {
+    min-height: 230px;
+    resize: vertical;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.send-btn,
+.draft-btn {
+    min-width: 150px;
+    border-radius: 12px;
+    padding: 11px 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.send-btn {
+    background: #0f766e;
+    color: white;
+    border: none;
+}
+
+.draft-btn {
+    background: white;
+    color: #0f766e;
+    border: 1px solid #0f766e;
+}
+</style>
+
+<div class="compose-panel">
+    <div class="compose-header">
+        <h2>Compose Message</h2>
+    </div>
+
+    <div class="compose-body">
         {% if error %}
         <div class="alert alert-danger">
             {{ error }}
@@ -20,72 +106,35 @@
         <form method="post">
             {% csrf_token %}
 
-            <div class="mb-3">
-                <label class="fw-semibold mb-2">
-                    Recipients <span style="color:red;">*</span>
-                </label>
+            <div class="form-group">
+                <label class="form-label">Recipients <span style="color:red;">*</span></label>
 
-                <div class="card border-0 p-3"
-                     style="max-height: 220px; overflow-y: auto; background:#f7f7f7; border-radius: 12px;">
-
+                <div class="recipient-box">
                     {% for user in users %}
-                    <div class="form-check mb-2">
-                        <input type="checkbox"
-                               name="recipient"
-                               value="{{ user.id }}"
-                               class="form-check-input"
-                               id="user{{ user.id }}">
-
-                        <label class="form-check-label" for="user{{ user.id }}">
-                            {{ user.username }}
-                        </label>
+                    <div>
+                        <input type="checkbox" name="recipient" value="{{ user.id }}" id="user{{ user.id }}">
+                        <label for="user{{ user.id }}">{{ user.username }}</label>
                     </div>
                     {% empty %}
-                    <span class="text-muted">No users available</span>
+                    <span>No users available</span>
                     {% endfor %}
-
                 </div>
             </div>
 
-            <div class="mb-3">
-                <label class="fw-semibold mb-2">Subject</label>
-                <input type="text"
-                       name="subject"
-                       class="form-control"
-                       style="border-radius: 10px;"
-                       placeholder="Enter subject">
+            <div class="form-group">
+                <label class="form-label">Subject</label>
+                <input type="text" name="subject" class="form-control" placeholder="Enter subject">
             </div>
 
-            <div class="mb-4">
-                <label class="fw-semibold mb-2">
-                    Message <span style="color:red;">*</span>
-                </label>
-
-                <textarea name="body"
-                          class="form-control"
-                          rows="6"
-                          style="border-radius: 10px;"
-                          placeholder="Write your message here..."></textarea>
+            <div class="form-group">
+                <label class="form-label">Message <span style="color:red;">*</span></label>
+                <textarea name="body" class="form-control" placeholder="Write your message here..."></textarea>
             </div>
 
-            <div class="d-flex gap-2">
-                <button type="submit"
-                        name="status"
-                        value="sent"
-                        class="btn btn-dark px-4"
-                        style="border-radius: 10px;">
-                    Send
-                </button>
-
-                <button type="submit"
-                        name="status"
-                        value="draft"
-                        class="btn btn-outline-dark px-4"
-                        style="border-radius: 10px;">
-                    Save Draft
-                </button>
+            <div class="actions">
+                <button type="submit" name="status" value="sent" class="send-btn">Send</button>
+                <button type="submit" name="status" value="draft" class="draft-btn">Save Draft</button>
             </div>
-
         </form>
     </div>
 </div>

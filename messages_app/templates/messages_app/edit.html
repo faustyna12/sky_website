@@ -1,118 +1,165 @@
-{% extends 'messages_app/messages_layout.html' %}
+{% extends 'messages_app/messages_base.html' %}
 
-{% block title %}Drafts{% endblock %}
+{% block title %}Edit Draft{% endblock %}
 
 {% block messages_content %}
 
-<div class="card border-0 shadow-sm main-card">
-    <div class="card-body p-0">
+<style>
+.edit-card {
+    width: 100%;
+    max-width: 1000px;
+    background: #ffffff;
+    border-radius: 22px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
 
-        <div class="p-4 border-bottom">
-            <h3 class="fw-bold mb-0" style="color:#000;">
-                Saved Drafts
-            </h3>
-        </div>
+.edit-header {
+    padding: 24px 28px;
+    background: linear-gradient(135deg, #22aba4, #0f766e);
+    color: white;
+}
 
-        {% if messages %}
-        <div class="draft-list p-3">
+.edit-header h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 800;
+}
 
-            {% for message in messages %}
-            <div class="draft-row d-flex align-items-stretch">
+.edit-body {
+    padding: 30px;
+}
 
-                <div class="status-bar"></div>
+.form-group {
+    margin-bottom: 22px;
+}
 
-                <a href="{% url 'edit_draft' message.id %}"
-                   class="flex-grow-1 px-4 py-3 text-decoration-none">
+.form-label {
+    display: block;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+}
 
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <div class="subject fw-semibold">
-                            {{ message.subject|default:"(No Subject)" }}
-                        </div>
+.form-control {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 15px;
+}
 
-                        <div class="text-muted small">
-                            {{ message.timestamp|date:"M d, Y H:i" }}
-                        </div>
-                    </div>
+textarea.form-control {
+    min-height: 220px;
+    resize: vertical;
+}
 
-                    <div class="text-muted small">
-                        <strong>To:</strong> {{ message.receiver.username }}
-                    </div>
+.recipient-box {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px;
+}
 
-                </a>
+.actions {
+    display: flex;
+    gap: 12px;
+}
 
-                <div class="d-flex align-items-center pe-3 gap-2">
-                    <a href="{% url 'edit_draft' message.id %}"
-                       class="btn btn-sm btn-outline-primary"
-                       style="border-radius:10px;">
-                        Edit
-                    </a>
+.save-btn {
+    background: #0f766e;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
 
-                    <form method="post"
-                          action="{% url 'delete_message' message.id %}"
-                          style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit"
-                                class="btn btn-sm btn-outline-danger"
-                                style="border-radius:10px;">
-                            Delete
-                        </button>
-                    </form>
-                </div>
+.draft-btn {
+    background: white;
+    color: #0f766e;
+    border: 1px solid #0f766e;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
 
-            </div>
-            {% endfor %}
+.error-box {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+</style>
 
-        </div>
-        {% else %}
-        <div class="p-4 text-muted">
-            You do not have any saved drafts.
+<div class="edit-card">
+    <div class="edit-header">
+        <h2>Edit Draft</h2>
+    </div>
+
+    <div class="edit-body">
+
+        {% if error %}
+        <div class="error-box">
+            {{ error }}
         </div>
         {% endif %}
 
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="form-label">
+                    Recipient
+                </label>
+
+                <div class="recipient-box">
+                    {% for user in users %}
+                    <div>
+                        <input type="radio"
+                               name="recipient"
+                               value="{{ user.id }}"
+                               id="user{{ user.id }}"
+                               {% if message.receiver.id == user.id %}checked{% endif %}>
+
+                        <label for="user{{ user.id }}">
+                            {{ user.username }}
+                        </label>
+                    </div>
+                    {% empty %}
+                    <span>No users available</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Subject</label>
+                <input type="text"
+                       name="subject"
+                       class="form-control"
+                       value="{{ message.subject }}">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Message</label>
+                <textarea name="body" class="form-control">{{ message.content }}</textarea>
+            </div>
+
+            <div class="actions">
+                <button type="submit" name="status" value="sent" class="save-btn">
+                    Send Message
+                </button>
+
+                <button type="submit" name="status" value="draft" class="draft-btn">
+                    Save Draft
+                </button>
+            </div>
+
+        </form>
     </div>
 </div>
-
-<style>
-.draft-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.draft-row {
-    display: flex;
-    border-radius: 14px;
-    overflow: hidden;
-    background: #fff;
-    transition: all 0.15s ease;
-    border: 1px solid #eee;
-    color: inherit;
-}
-
-.draft-row:hover {
-    background-color: #f5f8ff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-}
-
-.status-bar {
-    width: 5px;
-    background: #e0e0e0;
-}
-
-.subject {
-    font-size: 0.95rem;
-    color: #202124;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.draft-row .text-muted {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-</style>
 
 {% endblock %}

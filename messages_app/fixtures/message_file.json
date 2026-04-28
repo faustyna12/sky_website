@@ -1,0 +1,424 @@
+[
+  {
+    "model": "messages_app.message",
+    "pk": 1,
+    "fields": {
+      "sender": ["rafia_admin"],
+      "receiver": ["faustyna_admin"],
+      "message_type": "sent",
+      "subject": "Project Update",
+      "content": "The dashboard integration has now been completed successfully.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T09:00:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 2,
+    "fields": {
+      "sender": ["david_admin"],
+      "receiver": ["faustyna_admin"],
+      "message_type": "sent",
+      "subject": "Meeting Reminder",
+      "content": "Reminder that the team stand-up starts at 2PM today.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T09:10:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 3,
+    "fields": {
+      "sender": ["hikmat_admin"],
+      "receiver": ["faustyna_admin"],
+      "message_type": "sent",
+      "subject": "UI Review",
+      "content": "The latest UI updates have been reviewed and approved.",
+      "status": "sent",
+      "read_status": true,
+      "timestamp": "2026-04-27T09:20:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 4,
+    "fields": {
+      "sender": ["yonis_admin"],
+      "receiver": ["faustyna_admin"],
+      "message_type": "sent",
+      "subject": "Backend Progress",
+      "content": "The backend endpoints are now connected to the database.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T09:30:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 5,
+    "fields": {
+      "sender": ["rafia_admin"],
+      "receiver": ["faustyna_admin"],
+      "message_type": "sent",
+      "subject": "Testing Notes",
+      "content": "The latest tests passed and fixtures are now loading correctly.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T09:40:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 6,
+    "fields": {
+      "sender": ["david_admin"],
+      "receiver": ["faustyna_admin"],
+      "message_type": "sent",
+      "subject": "Team Feedback",
+      "content": "Please review the latest Trello updates.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T09:50:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 7,
+    "fields": {
+      "sender": ["hikmat_admin"],
+      "receiver": ["faustyna_admin"],
+      "message_type": "sent",
+      "subject": "Report Notes",
+      "content": "The report section needs another paragraph.",
+      "status": "sent",
+      "read_status": true,
+      "timestamp": "2026-04-27T10:00:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 8,
+    "fields": {
+      "sender": ["yonis_admin"],
+      "receiver": ["faustyna_admin"],
+      "message_type": "sent",
+      "subject": "Merge Complete",
+      "content": "The latest merge has been completed without issues.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T10:10:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 9,
+    "fields": {
+      "sender": ["rafia_admin"],
+      "receiver": ["faustyna_admin"],
+      "message_type": "sent",
+      "subject": "Reminder",
+      "content": "Do not forget to update your test screenshots.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T10:20:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 10,
+    "fields": {
+      "sender": ["david_admin"],
+      "receiver": ["faustyna_admin"],
+      "message_type": "sent",
+      "subject": "Final Review",
+      "content": "The final review meeting is tomorrow morning.",
+      "status": "sent",
+      "read_status": true,
+      "timestamp": "2026-04-27T10:30:00Z"
+    }
+  },
+
+  {
+    "model": "messages_app.message",
+    "pk": 11,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["rafia_admin"],
+      "message_type": "sent",
+      "subject": "Database Update",
+      "content": "The database schema has now been updated.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T11:00:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 12,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["david_admin"],
+      "message_type": "sent",
+      "subject": "Testing Complete",
+      "content": "The tests for the messages feature are now passing.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T11:10:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 13,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["hikmat_admin"],
+      "message_type": "sent",
+      "subject": "Design Feedback",
+      "content": "Please review the latest message page styling.",
+      "status": "sent",
+      "read_status": true,
+      "timestamp": "2026-04-27T11:20:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 14,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["yonis_admin"],
+      "message_type": "sent",
+      "subject": "Code Review",
+      "content": "Please check the latest views and URL integration.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T11:30:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 15,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["rafia_admin"],
+      "message_type": "sent",
+      "subject": "Final Checks",
+      "content": "Please confirm the final UI before submission.",
+      "status": "sent",
+      "read_status": true,
+      "timestamp": "2026-04-27T11:40:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 16,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["david_admin"],
+      "message_type": "sent",
+      "subject": "Navbar Update",
+      "content": "The navigation bar has been updated.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T11:50:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 17,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["hikmat_admin"],
+      "message_type": "sent",
+      "subject": "Template Review",
+      "content": "The new templates have been pushed.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T12:00:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 18,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["yonis_admin"],
+      "message_type": "sent",
+      "subject": "UI Final",
+      "content": "The final UI has been approved.",
+      "status": "sent",
+      "read_status": true,
+      "timestamp": "2026-04-27T12:10:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 19,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["rafia_admin"],
+      "message_type": "sent",
+      "subject": "Group Check",
+      "content": "Please confirm your section is complete.",
+      "status": "sent",
+      "read_status": false,
+      "timestamp": "2026-04-27T12:20:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 20,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["david_admin"],
+      "message_type": "sent",
+      "subject": "Submission Ready",
+      "content": "The project is almost ready for submission.",
+      "status": "sent",
+      "read_status": true,
+      "timestamp": "2026-04-27T12:30:00Z"
+    }
+  },
+
+  {
+    "model": "messages_app.message",
+    "pk": 21,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["rafia_admin"],
+      "message_type": "draft",
+      "subject": "Draft Proposal",
+      "content": "Still writing the proposal before sending.",
+      "status": "draft",
+      "read_status": false,
+      "timestamp": "2026-04-27T13:00:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 22,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["david_admin"],
+      "message_type": "draft",
+      "subject": "UI Suggestions",
+      "content": "Need to update button spacing and layout.",
+      "status": "draft",
+      "read_status": false,
+      "timestamp": "2026-04-27T13:10:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 23,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["hikmat_admin"],
+      "message_type": "draft",
+      "subject": "Unfinished Notes",
+      "content": "Still adding notes before saving final version.",
+      "status": "draft",
+      "read_status": false,
+      "timestamp": "2026-04-27T13:20:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 24,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["yonis_admin"],
+      "message_type": "draft",
+      "subject": "Mentor Feedback",
+      "content": "Need to add mentor comments before final draft.",
+      "status": "draft",
+      "read_status": false,
+      "timestamp": "2026-04-27T13:30:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 25,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["rafia_admin"],
+      "message_type": "draft",
+      "subject": "Testing Reflection",
+      "content": "Still adding notes for the testing section in the report.",
+      "status": "draft",
+      "read_status": false,
+      "timestamp": "2026-04-27T13:40:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 26,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["david_admin"],
+      "message_type": "draft",
+      "subject": "Login Notes",
+      "content": "Need to document login integration properly.",
+      "status": "draft",
+      "read_status": false,
+      "timestamp": "2026-04-27T13:50:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 27,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["hikmat_admin"],
+      "message_type": "draft",
+      "subject": "Final Testing",
+      "content": "Need to rerun tests after final merge.",
+      "status": "draft",
+      "read_status": false,
+      "timestamp": "2026-04-27T14:00:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 28,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["yonis_admin"],
+      "message_type": "draft",
+      "subject": "Template Cleanup",
+      "content": "Need to remove remaining placeholder text.",
+      "status": "draft",
+      "read_status": false,
+      "timestamp": "2026-04-27T14:10:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 29,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["rafia_admin"],
+      "message_type": "draft",
+      "subject": "UI Fixes",
+      "content": "Need to align spacing in inbox rows.",
+      "status": "draft",
+      "read_status": false,
+      "timestamp": "2026-04-27T14:20:00Z"
+    }
+  },
+  {
+    "model": "messages_app.message",
+    "pk": 30,
+    "fields": {
+      "sender": ["faustyna_admin"],
+      "receiver": ["david_admin"],
+      "message_type": "draft",
+      "subject": "Submission Notes",
+      "content": "Need to double check screenshots before submission.",
+      "status": "draft",
+      "read_status": false,
+      "timestamp": "2026-04-27T14:30:00Z"
+    }
+  }
+]

@@ -1,0 +1,101 @@
+{% extends 'global.html' %}
+
+{% block content %}
+<style>
+    .messages-shell {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+        width: 100%;
+        padding: 30px;
+    }
+
+    .messages-sidebar {
+        width: 240px;
+        flex-shrink: 0;
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+
+    .messages-sidebar h4 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 24px;
+    }
+
+    .messages-sidebar a {
+        display: block;
+        padding: 12px 14px;
+        margin-bottom: 10px;
+        border-radius: 12px;
+        text-decoration: none;
+        color: #374151;
+        font-weight: 500;
+        transition: 0.2s ease;
+    }
+
+    .messages-sidebar a:hover {
+        background: #f3f4f6;
+        color: #111827;
+    }
+
+    .messages-sidebar a.active {
+        background: #e5e7eb;
+        color: #111827;
+        font-weight: 700;
+    }
+
+    .messages-main {
+        flex: 1;
+        width: 100%;
+        max-width: none;
+    }
+
+    /* Top navbar active state */
+    nav a[href*="messages"] {
+        color: white !important;
+        font-weight: 700 !important;
+        position: relative;
+    }
+
+    nav a[href*="messages"]::after {
+        content: "";
+        position: absolute;
+        bottom: -18px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: white;
+        border-radius: 999px;
+    }
+</style>
+
+<div class="messages-shell">
+    <aside class="messages-sidebar">
+        <h4>Messages</h4>
+
+        <a href="{% url 'inbox' %}" class="{% if request.resolver_match.url_name == 'inbox' or request.resolver_match.url_name == 'messages_home' %}active{% endif %}">
+            Inbox
+        </a>
+
+        <a href="{% url 'sent_messages' %}" class="{% if request.resolver_match.url_name == 'sent_messages' %}active{% endif %}">
+            Sent
+        </a>
+
+        <a href="{% url 'drafts' %}" class="{% if request.resolver_match.url_name == 'drafts' or request.resolver_match.url_name == 'edit_draft' %}active{% endif %}">
+            Drafts
+        </a>
+
+        <a href="{% url 'compose_message' %}" class="{% if request.resolver_match.url_name == 'compose_message' %}active{% endif %}">
+            Compose
+        </a>
+    </aside>
+
+    <div class="messages-main">
+        {% block messages_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

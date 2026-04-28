@@ -1,66 +1,141 @@
-{% extends 'messages_app/messages_layout.html' %}
+{% extends 'messages_app/messages_base.html' %}
 
 {% block title %}View Message{% endblock %}
 
 {% block messages_content %}
 
-<div class="card border-0 shadow-sm main-card">
-    <div class="card-body p-0">
-
-        <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
-            <h3 class="fw-bold mb-0" style="color:#000;">
-                Message
-            </h3>
-
-            <form method="post"
-                  action="{% url 'delete_message' message.id %}">
-                {% csrf_token %}
-                <button type="submit"
-                        class="btn btn-sm btn-outline-danger"
-                        style="border-radius:10px;">
-                    Delete
-                </button>
-            </form>
-        </div>
-
-        <div class="p-4">
-
-            <div class="mb-3">
-                <h4 class="fw-semibold mb-1" style="color:#111111;">
-                    {{ message.subject|default:"(No Subject)" }}
-                </h4>
-
-                <div class="text-muted small">
-                    {{ message.timestamp|date:"M d, Y H:i" }}
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <div class="text-muted small mb-1">
-                    <strong>From:</strong> {{ message.sender.username }}
-                </div>
-
-                <div class="text-muted small">
-                    <strong>To:</strong> {{ message.receiver.username }}
-                </div>
-            </div>
-
-            <div class="message-body p-3">
-                {{ message.content|linebreaks }}
-            </div>
-
-        </div>
-    </div>
-</div>
-
 <style>
-.message-body {
-    background: #f8f9fa;
-    border-radius: 12px;
-    color: #202124;
-    line-height: 1.6;
-    border: 1px solid #eee;
+.message-view {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 22px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+
+.message-toolbar {
+    padding: 24px 28px;
+    background: linear-gradient(135deg, #22aba4, #0f766e);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-toolbar h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.delete-action {
+    background: #fee2e2;
+    color: #991b1b;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.message-content {
+    padding: 30px;
+}
+
+.message-subject {
+    font-size: 24px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.message-date {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.message-details {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+
+.detail-pill {
+    background: #e6fffb;
+    color: #0f766e;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.body-box {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 24px;
+    color: #111827;
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 22px;
+    color: #0f766e;
+    text-decoration: none;
+    font-weight: 700;
 }
 </style>
+
+<div class="message-view">
+
+    <div class="message-toolbar">
+        <h2>Message</h2>
+
+        <form method="post" action="{% url 'delete_message' message.id %}">
+            {% csrf_token %}
+            <button type="submit" class="delete-action">
+                Delete
+            </button>
+        </form>
+    </div>
+
+    <div class="message-content">
+
+        <div class="message-subject">
+            {{ message.subject|default:"(No Subject)" }}
+        </div>
+
+        <div class="message-date">
+            {{ message.timestamp|date:"M d, Y H:i" }}
+        </div>
+
+        <div class="message-details">
+            <div class="detail-pill">
+                From: {{ message.sender.username }}
+            </div>
+
+            <div class="detail-pill">
+                To: {{ message.receiver.username }}
+            </div>
+        </div>
+
+        <div class="body-box">
+            {{ message.content|linebreaks }}
+        </div>
+
+        {% if request.user == message.sender %}
+            <a href="{% url 'sent_messages' %}" class="back-link">Back to Sent</a>
+        {% else %}
+            <a href="{% url 'inbox' %}" class="back-link">Back to Inbox</a>
+        {% endif %}
+
+    </div>
+
+</div>
 
 {% endblock %}
