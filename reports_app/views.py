@@ -1,9 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from teams_app.models import Team
 from organisation_app.models import Department
 
 def reports_dashboard(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    if not request.user.is_staff:
+        return redirect('dashboard')
+    
     total_users = User.objects.count()
     total_teams = Team.objects.count()
     total_departments = Department.objects.count()
