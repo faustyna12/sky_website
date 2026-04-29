@@ -15,7 +15,7 @@
     </div>
 
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px;">
-        <a href="#" class="action-card blue-gradient">
+        <a href="{% url 'teams' %}" class="action-card blue-gradient">
             <div class="card-icon">🔍</div>
             <h3>Find a Team</h3>
             <p>Search and filter through all the teams</p>
@@ -27,7 +27,7 @@
             <p>Explore hierarchies and dependencies</p>
         </a>
 
-        <a href="#" class="action-card cyan-gradient">
+        <a href="{% url 'messages_home' %}" class="action-card cyan-gradient">
             <div class="card-icon">💬</div>
             <h3>Contact Teams</h3>
             <p>Quick access to team communication</p>
