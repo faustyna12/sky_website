@@ -20,7 +20,7 @@ def teams_page(request):
         )
 
     if department:
-        teams = teams.filter(department_id=department)
+        teams = teams.filter(department__name=department)
 
     if skill:
         teams = teams.filter(
