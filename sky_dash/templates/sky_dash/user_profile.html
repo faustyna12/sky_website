@@ -1,22 +1,38 @@
 {% extends 'global.html' %}
 
 {% block content %}
+<!-- Main profile container: Uses a soft grey background (f8fafc) to make the white profile card pop -->
 <main style="flex: 1; padding: 40px; background: #f8fafc; min-height: 100vh;">
+    
+    <!-- Header & Navigation Section -->
     <div style="margin-bottom: 20px;">
         <h1 style="font-size: 24px; color: #1e293b;">View Profile</h1>
+        <!-- Breadcrumb style link to return to the main dashboard -->
         <a href="{% url 'dashboard_home' %}" style="color: #64748b; text-decoration: none; font-size: 13px;">← Back To Dashboard</a>
     </div>
 
+    <!-- Profile Card: Uses flexbox for alignment and relative positioning for the edit button -->
     <div style="background: white; padding: 40px; border-radius: 16px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 30px; position: relative;">
-        <img src="https://ui-avatars.com/api/?name={{ user.username }}&size=100&background=22aba4&color=fff" 
-             style="width: 100px; height: 100px; border-radius: 50%;">
         
+        <!-- Dynamic Avatar: Uses the ui-avatars.com API to generate an image based on the username -->
+        <!-- This is a great fallback for when users haven't uploaded a real photo yet -->
+        <img src="https://ui-avatars.com/api/?name={{ user.username }}&size=100&background=22aba4&color=fff" 
+             style="width: 100px; height: 100px; border-radius: 50%;" 
+             alt="User Avatar">
+        
+        <!-- User Identity Info -->
         <div>
+            <!-- Displays 'First Last' name; falls back to 'Username' if First Name is missing in the database -->
             <h2 style="margin: 0; color: #1e293b;">{{ user.first_name|default:user.username }} {{ user.last_name }}</h2>
+            
+            <!-- Static Role Label (can be replaced with user.groups or a custom profile field) -->
             <p style="color: #64748b; margin: 5px 0;">Sky Associate</p>
+            
+            <!-- Displays User Email with a fallback placeholder -->
             <p style="color: #22aba4; font-size: 14px; font-weight: 500;">{{ user.email|default:"no-email@sky.uk" }}</p>
         </div>
 
+        <!-- Action Button: Positioned absolutely to the top-right of the white card -->
         <button style="position: absolute; right: 40px; top: 40px; background: #22aba4; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">
             Edit Profile
         </button>

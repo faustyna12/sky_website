@@ -1,51 +1,60 @@
 {% extends 'global.html' %}
 
 {% block content %}
+    <!-- Sidebar component for filtering (Department, Team Type, etc.) -->
     {% include 'organisation_app/_filter.html' %}
 
     <main class="content-area" style="flex: 1; padding: 30px;">
         
+        <!-- Header Section: Title and Export Action -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
             <div>
                 <h1 style="font-size: 24px; color: #2c3e50; margin: 0; font-family: 'Exo 2', sans-serif;">Organisation Map</h1>
                 <p style="font-size: 13px; color: #7f8c8d;">Visualizing team structures and connectivity for Sky Streaming</p>
             </div>
+            
+            <!-- Export CSV link: Passes current filter states via GET parameters -->
             <a href="{% url 'export_teams_csv' %}?department={{ selected_dept }}&team_type={{ selected_type }}&dependencies={{ current_filter }}" 
                style="background: #22aba4; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 14px;">
                 Export Data
             </a>
         </div>
 
+        <!-- Main Visualization Canvas -->
         <div class="network-canvas" style="background: #1f2d3d; border-radius: 15px; padding: 30px; min-height: 700px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
             
+            <!-- Iterate through Departments -->
             {% for dept in departments %}
             <div class="dept-row" style="margin-bottom: 40px;">
+                
+                <!-- Department Header: Triggers openModal() with department details and its list of teams -->
                 <h3 onclick="openModal('{{ dept.name }}', '{{ dept.leader }}', '{{ dept.description }}', '{% for team in teams %}{% if team.department_id == dept.id %}{{ team.name }}{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}')" 
-    style="color: #22aba4; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; border-left: 3px solid #22aba4; padding-left: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
-    
-    {{ dept.name }}
-    
-    <span class="info-hint" style="font-size: 10px; text-transform: none; letter-spacing: 0; color: #88929b; font-weight: normal; opacity: 0.7; border: 1px solid rgba(136, 146, 155, 0.3); padding: 2px 6px; border-radius: 4px;">
-        Click for Info
-    </span>
-</h3>
+                    style="color: #22aba4; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; border-left: 3px solid #22aba4; padding-left: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                    {{ dept.name }}
+                    <span class="info-hint" style="font-size: 10px; text-transform: none; letter-spacing: 0; color: #88929b; font-weight: normal; opacity: 0.7; border: 1px solid rgba(136, 146, 155, 0.3); padding: 2px 6px; border-radius: 4px;">
+                        Click for Info
+                    </span>
+                </h3>
+
+                <!-- Team Grid: Displays cards for teams belonging to this department -->
                 <div class="team-grid" style="display: flex; flex-wrap: wrap; gap: 15px;">
                     {% for team in teams %}
                         {% if team.department_id == dept.id %}
-                        <div class="team-node" 
-                             style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; width: 220px; transition: 0.4s ease; cursor: pointer;">
+                        <div class="team-node" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; width: 220px; transition: 0.4s ease; cursor: pointer;">
                             
+                            <!-- Team Meta Data -->
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px;">
                                 <div style="font-size: 10px; color: #88929b; text-transform: uppercase;">{{ team.team_type.name }}</div>
                                 <span style="font-size: 10px; color: #22aba4;">{{ team.members_count }} members</span>
                             </div>
                             
-                            <a href="{% url 'team_detail' team.id %}"
-                               style="font-size: 15px; color: white; font-weight: 500; margin: 5px 0; display: block; text-decoration: none;">
-                               {{ team.name }}
+                            <!-- Link to specific team detail page -->
+                            <a href="{% url 'team_detail' team.id %}" style="font-size: 15px; color: white; font-weight: 500; margin: 5px 0; display: block; text-decoration: none;">
+                                {{ team.name }}
                             </a>
                             <div style="font-size: 12px; color: #5d6d7e; margin-bottom: 8px;">{{ team.specialization }}</div>
 
+                            <!-- Contextual labels for Upstream/Downstream filters -->
                             {% if current_filter == 'upstream' %}
                                 <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05);">
                                     <span style="font-size: 9px; background: rgba(46, 204, 113, 0.15); color: #2ecc71; padding: 3px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">
@@ -64,6 +73,8 @@
                     {% endfor %}
                 </div>
             </div>
+            
+            <!-- Fallback if no departments/data are returned -->
             {% empty %}
             <div style="color: #88929b; text-align: center; padding-top: 150px;">
                 <p style="font-size: 18px;">No data found.</p>
@@ -71,49 +82,58 @@
             </div>
             {% endfor %}
 
+            <!-- Map Legend (Floating Box) -->
             <div class="legend" style="position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); color: white; font-size: 12px; backdrop-filter: blur(5px);">
                 <p style="margin-bottom: 10px; font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; color: #22aba4;">Map Legend</p>
-                <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 10px; height: 10px; background: #22aba4; border-radius: 2px;"></span> Active Team</div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="width: 10px; height: 10px; background: #22aba4; border-radius: 2px;"></span> Active Team
+                </div>
                 {% if current_filter == 'upstream' %}
-                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 5px;"><span style="width: 10px; height: 10px; background: #2ecc71; border-radius: 2px;"></span> Consumer Node</div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 5px;">
+                        <span style="width: 10px; height: 10px; background: #2ecc71; border-radius: 2px;"></span> Consumer Node
+                    </div>
                 {% elif current_filter == 'downstream' %}
-                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 5px;"><span style="width: 10px; height: 10px; background: #e67e22; border-radius: 2px;"></span> Provider Node</div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 5px;">
+                        <span style="width: 10px; height: 10px; background: #e67e22; border-radius: 2px;"></span> Provider Node
+                    </div>
                 {% endif %}
             </div>
         </div>
     </main>
 
+    <!-- Department Detail Modal (Hidden by default) -->
     <div id="deptModal" class="modal-overlay">
-    <div class="modal-box">
-        <div class="modal-header">
-            <h2 id="modalDeptName"></h2>
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div class="info-group">
-                <label>Executive Leadership</label>
-                <p id="modalLeader" style="font-weight: 600; font-size: 18px; color: white;"></p>
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 id="modalDeptName"></h2>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
             </div>
+            <div class="modal-body">
+                <div class="info-group">
+                    <label>Executive Leadership</label>
+                    <p id="modalLeader" style="font-weight: 600; font-size: 18px; color: white;"></p>
+                </div>
 
-            <div class="info-group">
-                <label>Strategic Mission & Specialization</label>
-                <p id="modalSpec" style="line-height: 1.6;"></p>
-            </div>
+                <div class="info-group">
+                    <label>Strategic Mission & Specialization</label>
+                    <p id="modalSpec" style="line-height: 1.6;"></p>
+                </div>
 
-            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
 
-            <div class="teams-list-section">
-                <label style="color: #22aba4; font-size: 11px; text-transform: uppercase; font-weight: bold;">Operational Teams</label>
-                <p style="font-size: 13px; color: #88929b; margin-bottom: 12px;">The following teams operate under this department's governance:</p>
-                
-                <div id="modalTeamList" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                    </div>
+                <div class="teams-list-section">
+                    <label style="color: #22aba4; font-size: 11px; text-transform: uppercase; font-weight: bold;">Operational Teams</label>
+                    <p style="font-size: 13px; color: #88929b; margin-bottom: 12px;">The following teams operate under this department's governance:</p>
+                    <!-- JavaScript will inject spans here -->
+                    <div id="modalTeamList" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- Page Styles -->
     <style>
-        /* Existing Team Node Hover */
+        /* Team Node interaction */
         .team-node:hover {
             background: rgba(34, 171, 164, 0.15) !important;
             border-color: #22aba4 !important;
@@ -121,9 +141,9 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
-        /* NEW MODAL STYLES */
+        /* Modal Overlay (Background Dim) */
         .modal-overlay {
-            display: none;
+            display: none; /* Hidden by JS */
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
@@ -134,6 +154,7 @@
             backdrop-filter: blur(4px);
         }
 
+        /* Modal Container */
         .modal-box {
             background: #1f2d3d;
             padding: 35px;
@@ -191,48 +212,43 @@
             font-size: 16px;
             color: #cbd5e0;
         }
-
-        .dependency-info h4 {
-            font-size: 14px;
-            margin: 0 0 10px 0;
-        }
-
-        .dependency-info p {
-            font-size: 13px;
-            color: #88929b;
-            line-height: 1.5;
-        }
     </style>
 
+    <!-- Modal Interaction Script -->
     <script>
+        /**
+         * Opens the department modal and populates it with data.
+         * @param {string} name - Department name
+         * @param {string} leader - Head of department
+         * @param {string} spec - Description/Mission
+         * @param {string} teamNamesString - Comma separated string of team names
+         */
         function openModal(name, leader, spec, teamNamesString) {
-    document.getElementById('modalDeptName').innerText = name;
-    document.getElementById('modalLeader').innerText = leader;
-    document.getElementById('modalSpec').innerText = spec;
+            document.getElementById('modalDeptName').innerText = name;
+            document.getElementById('modalLeader').innerText = leader;
+            document.getElementById('modalSpec').innerText = spec;
 
-    // Clear and fill the Team List
-    const listContainer = document.getElementById('modalTeamList');
-    listContainer.innerHTML = ''; // Reset list
-    
-    // teamNamesString comes from the HTML trigger as a comma-separated list
-    if (teamNamesString) {
-        const teams = teamNamesString.split(',');
-        teams.forEach(teamName => {
-            const span = document.createElement('span');
-            span.innerText = teamName.trim();
-            span.style = "background: rgba(34, 171, 164, 0.1); border: 1px solid rgba(34, 171, 164, 0.3); color: #22aba4; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;";
-            listContainer.appendChild(span);
-        });
-    }
+            const listContainer = document.getElementById('modalTeamList');
+            listContainer.innerHTML = ''; // Clear previous data
+            
+            if (teamNamesString) {
+                const teams = teamNamesString.split(',');
+                teams.forEach(teamName => {
+                    const span = document.createElement('span');
+                    span.innerText = teamName.trim();
+                    span.style = "background: rgba(34, 171, 164, 0.1); border: 1px solid rgba(34, 171, 164, 0.3); color: #22aba4; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;";
+                    listContainer.appendChild(span);
+                });
+            }
 
-    document.getElementById('deptModal').style.display = 'flex';
-}
+            document.getElementById('deptModal').style.display = 'flex';
+        }
 
         function closeModal() {
             document.getElementById('deptModal').style.display = 'none';
         }
 
-        // Close if user clicks the dark background
+        // Global listener: Close modal if the user clicks outside the modal box
         window.onclick = function(event) {
             const modal = document.getElementById('deptModal');
             if (event.target == modal) {

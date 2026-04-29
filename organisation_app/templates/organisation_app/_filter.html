@@ -1,3 +1,4 @@
+<!-- Main container for the sidebar using a semantic HTML5 aside tag -->
 <aside style="
     width: 280px; 
     background: white; 
@@ -6,61 +7,121 @@
     display: flex; 
     flex-direction: column; 
     height: 80vh;
-    border-radius: 0 20px 20px 0;   /* Curves top-right and bottom-right */
-    box-shadow: 4px 0 15px rgba(0,0,0,0.05); /* Adds a soft lift */
+    border-radius: 0 20px 20px 0;   /* Curves top-right and bottom-right corners */
+    box-shadow: 4px 0 15px rgba(0,0,0,0.05); /* Adds a subtle shadow on the right side */
 ">
-    
+
+    <!-- CSS styling block for internal elements within the sidebar -->
     <style>
-        .filter-label { display: block; font-size: 11px; font-weight: 700; color: #88929b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .sky-select { width: 100%; padding: 10px; border: 1px solid #dcdde1; border-radius: 6px; color: #2c3e50; background-color: white; font-size: 13px; margin-bottom: 20px; outline: none; }
-        /* Removed margin-top: auto to close the gap */
-        .stats-box { background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px; } 
-        .stats-label { font-size: 10px; color: #a4b0be; text-transform: uppercase; font-weight: 700; margin-bottom: 2px; }
-        .stats-value { font-size: 24px; color: #2c3e50; font-weight: 700; }
-        .reset-btn { display: block; width: 100%; padding: 10px; background: white; border: 1px solid #eee; color: #88929b; border-radius: 6px; text-align: center; text-decoration: none; font-size: 12px; }
+        /* Styling for small, uppercase labels above select inputs */
+        .filter-label { 
+            display: block; 
+            font-size: 11px; 
+            font-weight: 700; 
+            color: #88929b; 
+            margin-bottom: 8px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; }
+        /* Styling for the dropdown menus (select tags) */
+        .sky-select { 
+            width: 100%; 
+            padding: 10px; 
+            border: 1px solid #dcdde1; 
+            border-radius: 6px; 
+            color: #2c3e50; 
+            background-color: white; 
+            font-size: 13px; 
+            margin-bottom: 20px; 
+            outline: none; }
+        /* Container for the summary statistics at the bottom */
+        .stats-box { 
+            background: #f8f9fa; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin-top: 20px; } 
+        /* Label styling for the individual stat items */
+        .stats-label { 
+            font-size: 10px; 
+            color: #a4b0be; 
+            text-transform: uppercase; 
+            font-weight: 700; 
+            margin-bottom: 2px; }
+        /* Large, bold typography for the numerical values in stats */
+        .stats-value { 
+            font-size: 24px; 
+            color: #2c3e50; 
+            font-weight: 700; }
+        /* Styling for the reset link button */
+        .reset-btn { 
+            display: block; 
+            width: 100%; 
+            padding: 10px; 
+            background: white; 
+            border: 1px solid #eee; 
+            color: #88929b; 
+            border-radius: 6px; 
+            text-align: center; 
+            text-decoration: none; 
+            font-size: 12px; }
     </style>
 
+    <!-- Header section for the sidebar title -->
     <div style="margin-bottom: 30px;">
         <h2 style="font-size: 16px; font-weight: 700; color: #2c3e50; margin: 0;">Filters</h2>
     </div>
 
+    <!-- Django-aware form: sends GET request to the 'org_map' URL pattern when triggered -->
     <form method="GET" action="{% url 'org_map' %}">
+        
+        <!-- Department Filter Label -->
         <label class="filter-label">Department</label>
+        <!-- Department dropdown: 'onchange="this.form.submit()"' triggers an immediate page reload/filter on selection -->
         <select name="department" onchange="this.form.submit()" class="sky-select">
             <option value="all">All Departments</option>
+            <!-- Django loop to iterate through the department list from the backend -->
             {% for dept in departments_list %}
+                <!-- Populates options; adds 'selected' attribute if the ID matches the current selection in the URL -->
                 <option value="{{ dept.id }}" {% if selected_dept == dept.id|stringformat:"s" %}selected{% endif %}>{{ dept.name }}</option>
             {% endfor %}
         </select>
 
+        <!-- Team Type Filter Label -->
         <label class="filter-label">Team Type</label>
+        <!-- Team Type dropdown with auto-submit functionality -->
         <select name="team_type" onchange="this.form.submit()" class="sky-select">
             <option value="all">All Types</option>
+            <!-- Django loop to iterate through team types provided by the view context -->
             {% for type in team_types %}
+                <!-- Compares type ID to selection to persist the user's choice after reload -->
                 <option value="{{ type.id }}" {% if selected_type == type.id|stringformat:"s" %}selected{% endif %}>{{ type.name }}</option>
             {% endfor %}
         </select>
 
+        <!-- Dependency Relationship Filter Label -->
         <label class="filter-label">Dependencies</label>
+        <!-- Dropdown to filter graph connections by directionality -->
         <select name="dependencies" onchange="this.form.submit()" class="sky-select">
             <option value="all" {% if current_filter == 'all' %}selected{% endif %}>Show All Connections</option>
             <option value="upstream" {% if current_filter == 'upstream' %}selected{% endif %}>Upstream (Consumers)</option>
             <option value="downstream" {% if current_filter == 'downstream' %}selected{% endif %}>Downstream (Providers)</option>
         </select>
 
+        <!-- Button to clear all GET parameters and return to the base URL -->
         <a href="{% url 'org_map' %}" class="reset-btn">Reset to Default</a>
     </form>
 
+    <!-- Visual summary section for the filtered data -->
     <div class="stats-box">
         <div style="margin-bottom: 15px;">
+            <!-- Displays the total number of teams currently in view -->
             <div class="stats-label">Total Teams</div>
             <div class="stats-value">{{ total_teams }}</div>
         </div>
         <div>
+            <!-- Displays the count of connections/dependencies between teams -->
             <div class="stats-label" style="color: #22aba4;">Active Dependencies</div>
             <div class="stats-value" style="color: #22aba4;">{{ total_deps }}</div>
         </div>
     </div>
-    
     
 </aside>
