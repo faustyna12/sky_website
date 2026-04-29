@@ -28,7 +28,7 @@
     </div>
 
     <h2 style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; font-weight: 800; margin-bottom: 20px;">Recently Joined Users</h2>
-    <div style="background: white; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden;">
+    <div style="background: white; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; margin-bottom: 40px;">
         <table style="width: 100%; border-collapse: collapse;">
             <thead>
                 <tr style="background: #1e293b; color: white;">
@@ -43,6 +43,42 @@
                     <td style="padding: 15px 20px;">{{ user.username }}</td>
                     <td style="padding: 15px 20px;">{{ user.email }}</td>
                     <td style="padding: 15px 20px;">{{ user.date_joined|date:"d M Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2 style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; font-weight: 800; margin-bottom: 20px;">All Teams</h2>
+
+    <div style="background: white; border-radius: 16px; border: 1px solid #e2e8f0; padding: 20px; margin-bottom: 20px;">
+        <form method="GET">
+            <input 
+                type="text" 
+                name="search" 
+                value="{{ search }}"
+                placeholder="🔍 Search teams..." 
+                style="width: 100%; padding: 12px 15px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 14px; outline: none;">
+        </form>
+    </div>
+
+    <div style="background: white; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #1e293b; color: white;">
+                    <th style="padding: 15px 20px; text-align: left;">Team Name</th>
+                    <th style="padding: 15px 20px; text-align: left;">Department</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team in all_teams %}
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 15px 20px;">{{ team.name }}</td>
+                    <td style="padding: 15px 20px;">{{ team.department }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2" style="padding: 20px; text-align: center; color: #94a3b8;">No teams found.</td>
                 </tr>
                 {% endfor %}
             </tbody>
