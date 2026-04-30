@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'organisation_app',
     'teams_app',
     'sky_dash',
+    'reports_app'
 ]
 
 MIDDLEWARE = [

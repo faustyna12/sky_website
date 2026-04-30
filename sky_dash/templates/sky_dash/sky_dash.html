@@ -19,6 +19,7 @@
         </div>
     </div>
 
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px;">
     <!-- Quick Actions Grid: 3-column layout for primary navigation links -->
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px;">
         
@@ -42,7 +43,14 @@
             <h3>Contact Teams</h3>
             <p>Quick access to team communication</p>
         </a>
+
+        <a href="{% url 'reports_dashboard' %}" class="action-card" style="background: linear-gradient(135deg, #e53e3e, #c53030); padding: 25px; border-radius: 12px; color: white; text-decoration: none; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+            <div class="card-icon">📊</div>
+            <h3>Reports</h3>
+            <p>View user and team statistics</p>
+        </a>
     </div>
+    
 
     <!-- Content Grid: Splits screen into 2/3 for History and 1/3 for Activity logs -->
     <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 35px;">

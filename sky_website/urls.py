@@ -19,4 +19,5 @@ urlpatterns = [
     path('teams/', include('teams_app.urls')),
     path('dashboard/', include('sky_dash.urls')),
     path('messages/', include('messages_app.urls')),
+    path('reports/', include('reports_app.urls')),
 ]
