@@ -1,3 +1,4 @@
+# Author: Faustyna Szulc (w2081508)
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -7,7 +8,7 @@ from .models import Message
 
 
 @login_required
-def inbox(request):
+def inbox(request): #view for inbox page, retrieves messages where the logged in user is the receiver and counts unread messages
     messages = Message.objects.filter(
         receiver=request.user,
         message_type='sent'
@@ -26,7 +27,7 @@ def inbox(request):
 
 
 @login_required
-def sent_messages(request):
+def sent_messages(request): #view for sent messages page, retrieves messages where the logged in user is the sender
     messages = Message.objects.filter(
         sender=request.user,
         message_type='sent'
@@ -38,7 +39,7 @@ def sent_messages(request):
 
 
 @login_required
-def view_message(request, message_id):
+def view_message(request, message_id): #view for individual message page, retrieves the message by id and checks if the logged in user is either the sender or receiver
     message = get_object_or_404(Message, id=message_id)
 
     if request.user != message.sender and request.user != message.receiver:
@@ -54,7 +55,7 @@ def view_message(request, message_id):
 
 
 @login_required
-def compose_message(request):
+def compose_message(request): #view for compose message page, handles both GET and POST requests to display the form 
     users = User.objects.exclude(id=request.user.id)
 
     if request.method == 'POST':
@@ -91,7 +92,7 @@ def compose_message(request):
 
 
 @login_required
-def drafts(request):
+def drafts(request): #view for drafts page, retrieves messages where the logged in user is the sender and the message type is draft
     messages = Message.objects.filter(
         sender=request.user,
         message_type='draft'
@@ -103,7 +104,7 @@ def drafts(request):
 
 
 @login_required
-def edit_draft(request, message_id):
+def edit_draft(request, message_id): #view for edit draft page, retrieves the draft message by id 
     message = get_object_or_404(
         Message,
         id=message_id,
@@ -148,7 +149,7 @@ def edit_draft(request, message_id):
 
 
 @login_required
-def delete_message(request, message_id):
+def delete_message(request, message_id): #view for deleting a message, checks if the logged in user is either the sender or receiver of the message before allowing deletion
     message = get_object_or_404(Message, id=message_id)
 
     if message.sender == request.user or message.receiver == request.user:

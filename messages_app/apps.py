@@ -1,3 +1,4 @@
+# Author: Faustyna Szulc (w2081508)
 from django.apps import AppConfig
 
 

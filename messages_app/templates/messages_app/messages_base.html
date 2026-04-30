@@ -1,3 +1,4 @@
+{# Author: Faustyna Szulc (w2081508) #}
 {% extends 'global.html' %}
 
 {% block content %}
@@ -76,7 +77,7 @@
 <div class="messages-shell">
     <aside class="messages-sidebar">
         <h4>Messages</h4>
-
+        {# sidebar navigation links with active state based on current page #}
         <a href="{% url 'inbox' %}" class="{% if request.resolver_match.url_name == 'inbox' or request.resolver_match.url_name == 'messages_home' %}active{% endif %}">
             Inbox
         </a>
@@ -95,6 +96,7 @@
     </aside>
 
     <div class="messages-main">
+        {# main content block for each messages page (inbox, sent, drafts, compose, edit) #}
         {% block messages_content %}{% endblock %}
     </div>
 </div>

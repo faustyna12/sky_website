@@ -1,3 +1,4 @@
+{# Author: Faustyna Szulc (w2081508) #}
 {% extends 'messages_app/messages_base.html' %}
 
 {% block title %}View Message{% endblock %}
@@ -105,29 +106,32 @@
     </div>
 
     <div class="message-content">
+    {# display message subject or fallback to "(No Subject)" if empty #}
 
         <div class="message-subject">
             {{ message.subject|default:"(No Subject)" }}
         </div>
-
+        {# formatted timestamp of when message was sent #}
         <div class="message-date">
             {{ message.timestamp|date:"M d, Y H:i" }}
         </div>
-
+        {# pills showing sender and receiver usernames for message details view #}
         <div class="message-details">
             <div class="detail-pill">
                 From: {{ message.sender.username }}
             </div>
 
+            {% if request.user == message.sender %}
             <div class="detail-pill">
                 To: {{ message.receiver.username }}
             </div>
+            {% endif %}
         </div>
 
         <div class="body-box">
             {{ message.content|linebreaks }}
         </div>
-
+        {# conditional back link to either inbox or sent messages based on whether current user is sender or receiver of the message #}
         {% if request.user == message.sender %}
             <a href="{% url 'sent_messages' %}" class="back-link">Back to Sent</a>
         {% else %}

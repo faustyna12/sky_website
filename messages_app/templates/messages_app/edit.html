@@ -1,3 +1,4 @@
+{# Author: Faustyna Szulc (w2081508) #}
 {% extends 'messages_app/messages_base.html' %}
 
 {% block title %}Edit Draft{% endblock %}
@@ -119,6 +120,7 @@ textarea.form-control {
                 <div class="recipient-box">
                     {% for user in users %}
                     <div>
+                        {# radio button to select recipient #}
                         <input type="radio"
                                name="recipient"
                                value="{{ user.id }}"
@@ -136,6 +138,7 @@ textarea.form-control {
             </div>
 
             <div class="form-group">
+                {# subject input with existing subject value #}
                 <label class="form-label">Subject</label>
                 <input type="text"
                        name="subject"
@@ -144,11 +147,13 @@ textarea.form-control {
             </div>
 
             <div class="form-group">
+                {# textarea for message body with existing content #}
                 <label class="form-label">Message</label>
                 <textarea name="body" class="form-control">{{ message.content }}</textarea>
             </div>
 
             <div class="actions">
+                {# submit button to save changes and send message #}    
                 <button type="submit" name="status" value="sent" class="save-btn">
                     Send Message
                 </button>

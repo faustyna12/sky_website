@@ -1,3 +1,5 @@
+{# Author: Faustyna Szulc (w2081508) #}
+
 {% extends 'messages_app/messages_base.html' %}
 
 {% block title %}Compose{% endblock %}
@@ -5,7 +7,7 @@
 {% block messages_content %}
 
 <style>
-.compose-panel {
+.compose-panel { 
     width: 100%;
     background: #ffffff;
     border-radius: 24px;
@@ -14,7 +16,7 @@
     border: 1px solid #dbe4ee;
 }
 
-.compose-header {
+.compose-header { 
     height: 120px;
     display: flex;
     align-items: center;
@@ -23,29 +25,29 @@
     color: white;
 }
 
-.compose-header h2 {
+.compose-header h2 { 
     margin: 0;
     font-size: 2rem;
     font-weight: 800;
 }
 
-.compose-body {
+.compose-body { 
     padding: 30px;
 }
 
-.form-group {
+.form-group { 
     margin-bottom: 18px;
 }
 
-.form-label {
+.form-label { 
     display: block;
     font-weight: 700;
     margin-bottom: 8px;
     color: #111827;
 }
 
-.recipient-box,
-.form-control {
+.recipient-box, 
+.form-control { 
     width: 100%;
     border: 1px solid #d1d5db;
     border-radius: 14px;
@@ -53,24 +55,24 @@
     background: #f8fafc;
 }
 
-.form-control {
+.form-control { 
     background: white;
     font-size: 15px;
 }
 
-textarea.form-control {
+textarea.form-control { 
     min-height: 230px;
     resize: vertical;
 }
 
-.actions {
+.actions { 
     display: flex;
     gap: 12px;
     margin-top: 10px;
 }
 
-.send-btn,
-.draft-btn {
+.send-btn, 
+.draft-btn { 
     min-width: 150px;
     border-radius: 12px;
     padding: 11px 18px;
@@ -78,24 +80,24 @@ textarea.form-control {
     cursor: pointer;
 }
 
-.send-btn {
-    background: #0f766e;
+.send-btn { 
+    background: #0f766e; 
     color: white;
     border: none;
 }
 
-.draft-btn {
+.draft-btn { 
     background: white;
     color: #0f766e;
     border: 1px solid #0f766e;
 }
 </style>
-
+ {# main compose message form #}
 <div class="compose-panel">
     <div class="compose-header">
         <h2>Compose Message</h2>
     </div>
-
+ {# body of compose message form #}
     <div class="compose-body">
         {% if error %}
         <div class="alert alert-danger">
@@ -105,7 +107,7 @@ textarea.form-control {
 
         <form method="post">
             {% csrf_token %}
-
+             {# recipient input #}
             <div class="form-group">
                 <label class="form-label">Recipients <span style="color:red;">*</span></label>
 
@@ -120,17 +122,17 @@ textarea.form-control {
                     {% endfor %}
                 </div>
             </div>
-
+                {#recipient input#}
             <div class="form-group">
                 <label class="form-label">Subject</label>
                 <input type="text" name="subject" class="form-control" placeholder="Enter subject">
             </div>
-
+                {#input for message body#}
             <div class="form-group">
                 <label class="form-label">Message <span style="color:red;">*</span></label>
                 <textarea name="body" class="form-control" placeholder="Write your message here..."></textarea>
             </div>
-
+                {# action buttons #}
             <div class="actions">
                 <button type="submit" name="status" value="sent" class="send-btn">Send</button>
                 <button type="submit" name="status" value="draft" class="draft-btn">Save Draft</button>

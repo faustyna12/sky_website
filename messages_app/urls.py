@@ -1,3 +1,4 @@
+# Author: Faustyna Szulc (w2081508)
 from django.urls import path
 from . import views             
 

@@ -1,3 +1,4 @@
+{# Author: Faustyna Szulc (w2081508) #}
 {% extends 'messages_app/messages_base.html' %}
 
 {% block title %}Inbox{% endblock %}
@@ -150,6 +151,7 @@
 
     {% if messages %}
     <table class="messages-table">
+        {# table headers #}
         <thead>
             <tr>
                 <th>Status</th>
@@ -164,6 +166,7 @@
             {% for message in messages %}
             <tr>
                 <td>
+                    {# read/unread status indicator #}
                     {% if message.read_status %}
                     <span class="status-pill read">Read</span>
                     {% else %}
@@ -172,10 +175,12 @@
                 </td>
 
                 <td>
+                    {# sender username #}
                     <span class="user-pill">{{ message.sender.username }}</span>
                 </td>
 
                 <td>
+                    {# link to view message details with subject and preview #}
                     <a href="{% url 'view_message' message.id %}" class="message-link">
                         <div class="message-subject">{{ message.subject|default:"(No Subject)" }}</div>
                         <div class="message-preview">{{ message.content|truncatechars:70 }}</div>
@@ -183,11 +188,13 @@
                 </td>
 
                 <td class="message-date">
+                    {# formatted timestamp of when message was received #}
                     {{ message.timestamp|date:"M d, Y H:i" }}
                 </td>
 
                 <td>
                     <div class="action-buttons">
+                        {# link to view message details #}
                         <a href="{% url 'view_message' message.id %}" class="btn-view">View</a>
 
                         <form method="post" action="{% url 'delete_message' message.id %}">
